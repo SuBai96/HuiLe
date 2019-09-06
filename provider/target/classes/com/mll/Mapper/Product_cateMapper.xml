@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mll.Mapper.Product_cateMapper">
+
+
+    <select id="findAll" resultType="MLL_PRODUCT_CATEGORY">
+
+        select * from MLL_PRODUCT_CATEGORY where parent_id=#{id}
+
+    </select>
+
+
+    <select id="findRandom" resultType="Details">
+
+
+        SELECT * FROM MLL_PRODUCTDETALS WHERE mp_id IN
+        <foreach collection="array" item="item"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </select>
+
+    <select id="NewProduct" resultType="Details">
+
+        SELECT * FROM  MLL_PRODUCTDETALS ORDER BY mp_time DESC  LIMIT 0,8
+
+    </select>
+
+    <select id="FireBuy" resultType="Details">
+
+        SELECT * FROM MLL_PRODUCTDETALS ORDER BY mp_buy_id DESC LIMIT 0,5
+
+
+    </select>
+
+    <resultMap id="category" type="Details">
+        <id column="mp_id" property="mp_id"></id>
+        <association property="mll_product_category"  column="mpcid" select="selectByMpcId"/>
+    </resultMap>
+
+    <select id="selectByMpcId" resultType="MLL_PRODUCT_CATEGORY">
+       SELECT * FROM MLL_PRODUCT_CATEGORY mc
+	    WHERE mc.mpc_id=#{mpcid}
+    </select>
+
+
+    <select id="findByid" resultMap="category">
+      SELECT *,(SELECT mpc_id FROM MLL_PRODUCT_CATEGORY WHERE mpc_id=#{mpc_id}) mpcid FROM MLL_PRODUCTDETALS
+      where mpc_parentid=#{mpc_id} or mpc_id=#{mpc_id}
+    </select>
+
+
+
+
+
+
+
+
+
+
+</mapper>

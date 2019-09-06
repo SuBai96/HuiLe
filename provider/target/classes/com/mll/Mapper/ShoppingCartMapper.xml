@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mll.Mapper.ShoppingCartMapper">
+
+    <!--查询登陆用户的购物车商品(查询)-->
+    <select id="ShoppingCartAll" resultType="ShoppingCart">
+      SELECT
+        `ms_id`,
+        `ms_pid`,
+        `ms_uid`,
+        `ms_number`,
+        `ms_price`,
+        `ms_colour`,
+        `ms_model`,
+         mp.mp_image,
+         mp.mp_name
+        FROM
+        `MLL`.`MLL_SHOPPINGCART` AS ms
+    LEFT JOIN MLL_PRODUCT  AS mp ON ms.ms_pid=mp.mp_id
+    WHERE ms.ms_uid=#{id}
+    LIMIT #{pageindex},#{pagesize}
+
+    </select>
+
+    <!--加入购物车(新增)-->
+    <insert id="insetShoppingCart" parameterType="ShoppingCart">
+        INSERT INTO `MLL`.`MLL_SHOPPINGCART`
+            (
+            `ms_pid`,
+            `ms_uid`,
+            `ms_number`,
+            `ms_price`,
+            `ms_colour`,
+            `ms_model`
+            )
+            VALUES
+            (
+            #{ms_pid},
+            #{ms_uid},
+            #{ms_number},
+            #{ms_price},
+            #{ms_colour},
+            #{ms_model}
+            );
+    </insert>
+
+    <!--如果是同一件商品则不添加到购物车,修改数量即可(型号跟颜色一致的情况下)-->
+    <update id="updateNumber">
+    UPDATE `MLL`.`MLL_SHOPPINGCART` SET `ms_number` = ms_number+1
+    WHERE
+    `ms_colour` = #{ms_colour} AND `ms_model`=#{ms_model};
+    </update>
+
+    <!--删除指定的购物车商品-->
+    <delete id="deleteShoppingCart">
+        DELETE FROM `MLL`.`MLL_SHOPPINGCART`
+	    WHERE
+	    `ms_id` = #{msid} ;
+    </delete>
+
+    <!--获取指定用户购物车中商品的总商品数量-->
+    <select id="countShoppingCart" resultType="int">
+        SELECT COUNT(*) FROM MLL_SHOPPINGCART
+        WHERE
+        `ms_uid` = #{uid}
+    </select>
+
+    <select id="selectShoppingCart" resultType="map">
+    SELECT
+        `ms_id`,
+        `ms_pid`,
+        `ms_uid`,
+        `ms_number`,
+        `ms_price`,
+        `ms_colour`,
+        `ms_model`,
+         mp.mp_image,
+         mp.mp_name,
+         mp.mp_stock,
+         (ms_price*ms_number) dj
+        FROM
+        `MLL`.`MLL_SHOPPINGCART` AS ms
+    LEFT JOIN MLL_PRODUCT  AS mp ON ms.ms_pid=mp.mp_id
+    WHERE ms.ms_uid=#{id}
+    </select>
+
+    <!--新增订单-->
+    <insert id="insertOrder" parameterType="Order">
+       INSERT INTO `MLL`.`MLL_ORDER`
+	(`mo_id`,
+	`mu_user_id`,
+	`mr_name`,
+	`mr_address`,
+	`mr_addressDetail`,
+	`mr_mobile`,
+	`mo_create_time`,
+	`mo_sum`,
+	`mo_type`,
+	`mo_fangshi`
+	)
+	VALUES
+            (
+            #{mo_id},
+            #{mu_user_id},
+            #{mr_name},
+             #{mr_address},
+              #{mr_addressDetail},
+              #{mr_mobile},
+            #{mo_create_time},
+            #{mo_sum},
+            #{mo_type},
+            #{mo_fangshi}
+            );
+    </insert>
+
+
+    <insert id="orderXingQingInsert" parameterType="Order_Detail">
+    INSERT INTO `MLL`.`MLL_ORDER_DETAIL`
+	(
+	`mo_id`,
+	`mp_id`,
+	`mp_xinghao`,
+	`mod_count`,
+	`mod_xiaoji`,
+	`mod_image`
+	)
+        VALUES
+        (
+        #{mo_id},
+        #{mp_id},
+        #{mp_xinghao},
+        #{mod_count},
+        #{mod_xiaoji},
+         #{mod_image}
+        );
+    </insert>
+
+    <delete id="deleteShopping">
+    DELETE FROM `MLL`.`MLL_SHOPPINGCART`
+	WHERE
+	`ms_id` = #{id};
+    </delete>
+
+    <select id="selectorderId" resultType="int">
+    SELECT 	`mo_id`
+	FROM
+	`MLL`.`MLL_ORDER`
+	WHERE `mo_uuid`=#{uuid}
+    </select>
+
+    <select id="dingdan" resultType="Order">
+      	select 	`mo_id`,`mu_user_id`,`mr_name`,`mr_address`,`mr_addressDetail`,`mr_mobile`,`mo_create_time`,`mo_sum`,`mo_type`,`mo_fangshi`
+      	from `MLL`.`MLL_ORDER` where  mu_user_id=#{id}
+        <if test="type!='' and type!=null">
+            and  mo_type  ${type}
+        </if>
+        <if test="moid!='' and moid!=null">
+            and mo_id like CONCAT(CONCAT('%',#{moid}),'%')
+        </if>
+        <if test="name!='' and name!=null">
+            and mr_name like CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+    </select>
+    <select id="selectByDingDanDetail" resultType="Order">
+        select 	`mo_id`,`mu_user_id`,`mr_name`,`mr_address`,`mr_addressDetail`,`mr_mobile`,`mo_create_time`,`mo_sum`,`mo_type`,`mo_fangshi`
+      	from `MLL`.`MLL_ORDER` where  mo_id=#{moid}
+    </select>
+    <select id="dingdanxiangqing" resultType="Order_Detail">
+         SELECT 	`mod_id`,
+	`mo_id`,
+	`mp_id`,
+	`mp_xinghao`,
+	`mod_count`,
+	`mod_xiaoji`,
+	`mod_image`
+
+	FROM
+	`MLL`.`MLL_ORDER_DETAIL`
+	WHERE mo_id=#{moid}
+    </select>
+
+
+    <update id="confirmReceiving">
+      UPDATE `MLL`.`MLL_ORDER` SET `mo_type` = 3 WHERE  `mo_id` = #{moid}
+    </update>
+
+
+    <delete id="cancerOrder">
+     DELETE FROM `MLL`.`MLL_ORDER`  WHERE `mo_id` =#{moid}
+    </delete>
+    <delete id="cancerOrderDetail">
+     DELETE FROM `MLL`.`MLL_ORDER_DETAIL`  WHERE `mo_id`=#{moid}
+    </delete>
+    <update id="updateOrder">
+        UPDATE `MLL`.`MLL_ORDER`
+        SET`mr_name` = #{mr_name} ,`mr_address` = #{mr_address} ,`mr_addressDetail` = #{mr_addressDetail},`mr_mobile` = #{mr_mobile}
+        WHERE`mo_id` = #{mo_id}
+    </update>
+    <update id="DelOrder">
+        UPDATE `MLL`.`MLL_ORDER` SET `mo_type` = 5 WHERE  `mo_id` = #{moid}
+    </update>
+
+    <select id="Recommend" resultType="Details">
+        SELECT * FROM MLL_PRODUCTDETALS WHERE mp_id IN
+        <foreach collection="array" item="item"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

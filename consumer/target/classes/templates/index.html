@@ -1,0 +1,564 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Buyle</title>
+    <link rel="icon" type="image/x-icon" href="http://182.92.194.216:2202/GJStatic/img/favicon.ico"/>
+    <link rel="stylesheet" href="http://182.92.194.216:2202/GodStatic/css/style.css" />
+    <link rel="stylesheet" href="http://182.92.194.216:2202/GodStatic/css/slider.css"/>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript" src="http://182.92.194.216:2202/GJStatic/layui/layui.all.js"></script>
+</head>
+
+<body style="overflow-x: hidden">
+<header>
+    <div>
+        <div id="top">
+            <ul id="top_lt">
+                <li><a href="">小米商城</a></li>
+                <li><a href="">MIUI</a></li>
+                <li><a href="">米聊</a></li>
+                <li><a href="">游戏</a></li>
+                <li><a href="">多看阅读</a></li>
+                <li><a href="">云服务</a></li>
+                <li><a href="">金融</a></li>
+                <li><a href="">小米网移动版</a></li>
+                <li><a href="">问题反馈</a></li>
+                <li><a href="">Select&nbsp;Region</a></li>
+            </ul>
+            <div id="top_rt" class="rt">
+                <span id="User">
+
+                </span>
+                <a href="">消息通知</a>
+                <a href="http://127.0.0.1:81/Order.html">我的订单</a>
+                <p class="rt">
+                    <b></b>
+                    <a href="http://127.0.0.1:81/ShoppingCart.html">购物车</a>
+                    <i>(0)</i>
+                </p>
+            </div>
+        </div>
+    </div>
+</header>
+<nav>
+    <div id="nav">
+        <!---搜索框--->
+        <div id="search" class="rt">
+            <form method="post" action="/product/seach">
+                <input type="" placeholder="　Aj湖人刮刮乐" name="zhi" style="height: 50px;float: left;border: none"/>
+
+                <input type="submit" value="搜索" style="width: 56px;float:left;height: 50px;border: none"/>
+                <!----搜索框下拉菜单--->
+            </form>
+        </div>
+
+        <!----logo---->
+        <div class="lt">
+            <img src="http://182.92.194.216:2202/GodStatic/images/logo.png"/>
+        </div>
+        <!-------js两个手机的动画------->
+
+        <!-----nav--->
+        <ul>
+            <li><a href="">小米手机</a></li>
+            <li><a href="">红米</a></li>
+            <li><a href="">平板</a></li>
+            <li><a href="">笔记本</a></li>
+            <li><a href="">电视</a></li>
+            <li><a href="">盒子</a></li>
+            <li><a href="">影音</a></li>
+            <li><a href="">路由器</a></li>
+            <li><a href="">智能硬件</a></li>
+            <li><a href="">服务</a></li>
+            <li><a href="">社区</a></li>
+        </ul>
+    </div>
+    <!----------做nav的弹出框---------------->
+    <div id="nav_product">
+        <ul>
+
+        </ul>
+    </div>
+</nav>
+<!----------------banner------------------>
+<div id="banner">
+    <!--------右边主图------------>
+    <div class="sliders">
+
+        <div class="layui-carousel" id="test10" >
+            <div carousel-item="">
+                <div><a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/banner_1.jpg"></a> </div>
+                <div><a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/banner_2.jpg"></a></div>
+                <div><a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/banner_3.jpg"></a></div>
+                <div><a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/banner_4.jpg"></a></div>
+                <div><a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/banner_5.webp"></a></div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-------左边菜单----------->
+    <div id="category" style="margin-top: -2px">
+        <ul id="pj">
+
+        </ul>
+    </div>
+    <!---导航菜单弹出框---->
+
+    <!--------banner底部img--------->
+    <div id="banner_btm">
+        <ul class="lt">
+            <li><a href=""><i></i>选购手机</a></li>
+            <li><a href=""><i></i>企业团购</a></li>
+            <li><a href=""><i></i>官翻产品</a></li>
+            <li><a href=""><i></i>小米移动</a></li>
+            <li><a href=""><i></i>以旧换新</a></li>
+            <li><a href=""><i></i>话费充值</a></li>
+        </ul>
+
+        <a href="" class="lt">
+            <img src="http://182.92.194.216:2202/GodStatic/images/banner_btm1.gif"/>
+        </a>
+        <a href="" class="lt">
+            <img src="http://182.92.194.216:2202/GodStatic/images/banner_btm2.gif"/>
+        </a>
+        <a href="" class="rt">
+            <img src="http://182.92.194.216:2202/GodStatic/images/banner_btm3.gif"/>
+        </a>
+
+    </div>
+</div>
+<!------------主体--------------->
+<section>
+    <!--------//一小米明星---------->
+    <div id="star">
+        <div>
+
+            <h2 class="l">热销产品</h2>
+        </div>
+        <div class="star_dl" id="fire">
+
+
+        </div>
+    </div>
+    <!-------//二-智能硬件--------->
+    <div id="product_hardware">
+        <a class="rt" href="">查看全部<b>&gt;</b></a>
+        <h2>新品上架</h2>
+        <a class="prHe" href=""><img src="http://182.92.194.216:2202/GodStatic/images/product_hardware_01.jpg"></a>
+        <ul id="hardware">
+
+        </ul>
+    </div>
+
+    <!--------//六--为你推荐------------->
+    <div id="recommended">
+        <div class="top">
+            <b class="rt"></b>
+            <h2 class="lt">为你推荐</h2>
+        </div>
+        <ul class="rt_li" id="tui">
+
+
+
+
+        </ul>
+    </div>
+
+
+</section>
+<div id="movies">
+    <a class="rt">
+        查看全部<b>></b>
+    </a>
+    <h2 class="lt">视频</h2>
+    <ul>
+        <li>
+            <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/mov_01.gif"></a>
+            <p>
+                <a href="#">小米5s“暗夜之眼”中的《香港纪实》</a>
+            </p>
+            <span>更锐利、细腻的创作利器</span>
+        </li>
+        <li>
+            <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/mov_02.gif"></a>
+            <p>
+                <a href="#">红米年度品牌视频</a>
+            </p>
+            <span>一亿人喜爱你，是一种责任。</span>
+        </li>
+        <li>
+            <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/mov_03.gif"></a>
+            <p>
+                <a href="#">小米笔记本Air可靠性测试视频</a>
+            </p>
+            <span>小米笔记本Air是如何炼成的？</span>
+        </li>
+        <li>
+            <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/move_04.jpg"></a>
+            <p>
+                <a href="#">小米Max 绝美外观视频</a>
+            </p>
+            <span>6.44" 大屏黄金尺寸，看什么都震撼</span>
+        </li>
+    </ul>
+</div>
+<footer id="Customer">
+    <ul class="">
+        <li>
+            <a href=""><span></span>预约维修服务</a>
+        </li>
+        <span>丨</span>
+        <li>
+            <a href=""><span></span>7天无理由退货</a>
+        </li>
+        <span>丨</span>
+        <li>
+            <a href=""><span></span>15天免费换货</a>
+        </li>
+        <span>丨</span>
+        <li>
+            <a href=""><span></span>满150元包邮</a>
+        </li>
+        <span>丨</span>
+        <li>
+            <a href=""><span></span>520余家售后网点</a>
+        </li>
+    </ul>
+    <div id="hps">
+        <div class="rt">
+            <div>400-100-5678</div>
+            <p>周一至周日 8:00-18:00</p>
+            <p>（仅收市话费）</p>
+            <a href="#" class="hv">
+                <img src="http://182.92.194.216:2202/GodStatic/images/24h_03.jpg">
+            </a>
+        </div>
+        <ul class="help">
+            <li>
+                <h4>帮助中心</h4>
+                <a href="">账户管理</a>
+                <a href="">购物指南</a>
+                <a href="">订单操作</a>
+            </li>
+            <li>
+                <h4>服务支持</h4>
+                <a href="">售后政策</a>
+                <a href="">自助服务</a>
+                <a href="">相关下载</a>
+            </li>
+            <li>
+                <h4>线下门店</h4>
+                <a href="">小米之家</a>
+                <a href="">服务网点</a>
+                <a href="">零售网点</a>
+            </li>
+            <li>
+                <h4>关于小米</h4>
+                <a href="">了解买来乐</a>
+                <a href="">加入买来乐</a>
+                <a href="">联系我们</a>
+            </li>
+            <li>
+                <h4>关注我们</h4>
+                <a href="">新浪微博</a>
+                <a href="">乐部落</a>
+                <a href="">官方微信</a>
+            </li>
+            <li>
+                <h4>特色服务</h4>
+                <a href="">F码通道</a>
+                <a href="">乐移动</a>
+                <a href="">防伪查询</a>
+            </li>
+        </ul>
+    </div>
+</footer>
+<footer id="ft">
+    <div id="footer">
+        <div class="rt">
+            <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/v-logo-4.gif"></a>
+            <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/v-logo-1.png"></a>
+            <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/v-logo-2.png"></a>
+            <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/v-logo-3.png"></a>
+        </div>
+
+        <div class="lt">
+            <a href="#">买来乐商城</a>丨
+            <a href="#">MIUI</a>丨
+            <a href="#">乐聊</a>丨
+            <a href="#">多看书城</a>丨
+            <a href="#">买来乐路由器</a>丨
+            <a href="#">视频电话</a>丨
+            <a href="#">买来乐后院</a>丨
+            <a href="#">买来乐天猫店</a>丨
+            <a href="#">买来乐淘宝直营店</a>丨
+            <a href="#">买来乐网盟</a>丨
+            <a href="#">问题反馈</a>丨
+            <a href="#">Select Region</a>
+            <p>
+
+                &copy;<a href="#">mi.com</a>京ICP证110507号
+                <a href="#"> 京ICP备10046444号 </a>
+                <a href="#"> 京公网安备11010802020134号</a>
+                <a href="#">京网文[2014]0059-0009号</a>
+            </p>
+            违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试
+        </div>
+
+    </div>
+    <!--<div class="btm"> </div>-->
+</footer>
+<script src="http://182.92.194.216:2202/GodStatic/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    function loginOut() {
+        $.ajax({
+            url:'/loginOut/User',
+            type:'post',
+            success:function (data) {
+                if(data.flag){
+                    window.location.href='http://127.0.0.1:81/login.html';
+                }
+            }
+        });
+    }
+    //加载事件
+    $(function () {
+
+        $.ajax({
+            url: '/getUser',
+            type: 'post',
+            success: function (data) {
+                if (data) {
+                    var user = "<a href='/User/getUser/PersonalCenter'>"+data.mu_user_name+"</a>&nbsp;&nbsp;<a  onclick='loginOut()'>退出登录</a>";
+                } else {
+                    var user = "<a href='http://127.0.0.1:81/login.html'>登录</a><a href='http://127.0.0.1:81/register.html'>注册</a>";
+                }
+                $("#User").append(user);
+            }
+        });
+
+        $.post("product_cate/all/0",{"id":0},function (data) {
+
+            var json=eval("("+data+")");//将数据转成json格式
+
+            $.each(json,function(i,d){
+
+                var li = "<li><a href=''>"+d.mpc_name+"</a><b></b>";
+                var div = "<div class='cate_right'>";
+
+                var second =  d.childList;
+                var dl="";
+                $.each(second,function(i,d){
+
+
+                    var s = "<dl> <dt><h1><a href='product/findbyid/"+d.mpc_id+"/0'>"+d.mpc_name+"</a></h1></dt>  ";
+                    var third=d.childList;
+                    var ss="</dl>";
+                    //<dd><a href=''></a></dd>
+                    var dd="";
+                    $.each(third,function (i,d) {
+
+                        var a="<dd><a href='product/findbyid/"+d.mpc_id+"/0'>"+d.mpc_name+"</a></dd>";
+                        dd=dd+a;
+                    });
+
+                    dl = dl+s+dd+ss;
+
+                });
+
+                var end = li+div+dl+"</div></li>";
+
+                $("#pj").append(end);
+
+            });
+
+        },"html")
+
+
+        $.post("product/random",null,function (data) {
+
+            var json=eval("("+data+")");//将数据转成json格式
+
+            var tuijian="";
+            $.each(json,function (i,d) {
+
+
+
+                    var li="<li style='padding-left:20px;'>";
+
+                    var li2="</li>";
+
+                    var a="<a href='' ><img style='width: 150px;height: 150px;padding: 20px;' src="+'http://182.92.194.216:2202/PGStatic/image/'+d.mp_image+"></a>";
+
+                    var h4="<h4><a href=''>"+d.mp_name+"</a></h4>";
+
+                    var span="<span>&yen;"+d.mp_price+"</span>";
+
+                    var p="<p>19.6万人评价</p>";
+
+                    tuijian=tuijian+li+a+h4+span+p+li2;
+                }
+
+            )
+            $("#tui").append(tuijian);
+        },"html")
+
+
+        $.post("product/newproduct",null,function (data) {
+
+            var json=eval("("+data+")");
+
+            var end="";
+
+            $.each(json,function (i,d) {
+
+                var hidden="<b hidden='hidden'>"+d.mp_id+"</b>";
+                var li="<li><div>新品</div>";
+                var a="<a href=''><img style='width: 156px;height: 133px;' src="+'http://182.92.194.216:2202/PGStatic/image/'+d.mp_image+"></a>";
+                var h4="<h4><a href=''>"+d.mp_name+"</a></h4>";
+
+                var p="<p style='white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width: 210px;height: 20px;'>"+d.mp_descpiption+"</p>";
+                var span="<span>&yen;"+d.mp_price+"</span>";
+                var li2="</li>";
+
+                end=end+li+hidden+a+h4+p+span+li2;
+            })
+
+            $("#hardware").append(end);
+        },"html");
+
+
+        $.post("product/firebuy",null,function (data) {
+            var json=eval("("+data+")");
+
+            var end="";
+            $.each(json,function (i,d) {
+                var dl="<dl class='s4'>";
+                var b="<b hidden='hidden'>"+d.mp_id+"</b>";
+                var dt="<dt><a href='/consumer/details/list/"+d.mp_id+"'><img src="+'http://182.92.194.216:2202/PGStatic/image/'+d.mp_image+"></a></dt>";
+                var dd="<dd>";
+                var h4="<h4><a href=''>"+d.mp_name+"</a></h4>";
+                var p="<p style='white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width: 218px;height:20px;'>"+d.mp_descpiption+"</p>";
+                var dd1="</dd>";
+                var dd2="<dd class='Ltc'>&yen;"+d.mp_price+"</dd>";
+                var dl1="</dl>";
+
+                end=end+dl+b+dt+dd+h4+p+dd1+dd2+dl1;
+            })
+
+            $("#fire").append(end);
+
+        },"html")
+    });
+
+
+
+
+    $("#top_rt p").hover(function () {
+
+
+            $("#top_rt p").css({"background":"white"});
+            $("#top_rt p a").css({"color":"#FF6709"});
+            $("#top_rt p i").css({"color":"#FF6709"});
+        },function () {
+
+            $("#top_rt p").css({"background":"#424242"});
+            $("#top_rt p a").css({"color":"#B0A5A5"});
+            $("#top_rt p i").css({"color":"#B0A5A5"});
+        }
+    )
+
+
+
+
+    $(document).on("mouseover",'#category>ul li',function () {
+        $(this).find(".cate_right").css({"display":"inline-block"});
+    });
+    $(document).on("mouseout",'#category>ul li',function () {
+        $(this).find(".cate_right").css({"display":"none"});
+    });
+
+
+
+
+</script>
+
+<script>
+
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+
+        //常规轮播
+        carousel.render({
+            elem: '#test1'
+            ,arrow: 'always'
+        });
+
+        //改变下时间间隔、动画类型、高度
+        carousel.render({
+            elem: '#test2'
+            ,interval: 1800
+            ,anim: 'fade'
+            ,height: '120px'
+        });
+
+        //设定各种参数
+        var ins3 = carousel.render({
+            elem: '#test3'
+        });
+        //图片轮播
+        carousel.render({
+            elem: '#test10'
+            ,width: '1224px'
+            ,height: '460px'
+            ,interval: 5000
+        });
+
+        //事件
+        carousel.on('change(test4)', function(res){
+            console.log(res)
+        });
+
+        var $ = layui.$, active = {
+            set: function(othis){
+                var THIS = 'layui-bg-normal'
+                    ,key = othis.data('key')
+                    ,options = {};
+
+                othis.css('background-color', '#5FB878').siblings().removeAttr('style');
+                options[key] = othis.data('value');
+                ins3.reload(options);
+            }
+        };
+
+        //监听开关
+        form.on('switch(autoplay)', function(){
+            ins3.reload({
+                autoplay: this.checked
+            });
+        });
+
+        $('.demoSet').on('keyup', function(){
+            var value = this.value
+                ,options = {};
+            if(!/^\d+$/.test(value)) return;
+
+            options[this.name] = value;
+            ins3.reload(options);
+        });
+
+        //其它示例
+        $('.demoTest .layui-btn').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+    });
+</script>
+
+</body>
+</html>

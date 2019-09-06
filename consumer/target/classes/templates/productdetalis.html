@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="http://182.92.194.216:2202/GodStatic/css/style.css" />
+
+<link rel="stylesheet" href="http://182.92.194.216:2202/GodStatic/css/slider.css"/>
+<script src="http://182.92.194.216:2202/GodStatic/js/jquery-1.8.3.min.js"
+        type="text/javascript"></script>
+<link rel="stylesheet" href="http://182.92.194.216:2202/GJStatic/layui/css/layui.css">
+<script type="text/javascript" src="http://182.92.194.216:2202/GJStatic/layui/layui.all.js"></script>
+
+
+
+<body>
+<header>
+    <div>
+        <div id="top">
+            <ul id="top_lt">
+                <li><a href="">小米商城</a></li>
+                <li><a href="">MIUI</a></li>
+                <li><a href="">米聊</a></li>
+                <li><a href="">游戏</a></li>
+                <li><a href="">多看阅读</a></li>
+                <li><a href="">云服务</a></li>
+                <li><a href="">金融</a></li>
+                <li><a href="">小米网移动版</a></li>
+                <li><a href="">问题反馈</a></li>
+                <li><a href="">Select&nbsp;Region</a></li>
+            </ul>
+            <div id="top_rt" class="rt">
+                <span id="User">
+
+                </span>
+                <a href="">消息通知</a>
+                <a href="">我的订单</a>
+                <p class="rt">
+                    <b></b>
+                    <a href="http://127.0.0.1:81/ShoppingCart.html">购物车</a>
+                    <i>(0)</i>
+                </p>
+            </div>
+        </div>
+    </div>
+</header>
+<div style="height: 64px;width: auto;margin-top: 20px;">
+
+    <div  style="float: left;margin-left: 60px;"><img
+            src="http://182.92.194.216:2202/GodStatic/images/logo.png"></div>
+
+    <div style="border: 3px solid #FF5500;height: 32px;width: 488px;float: left;margin-left:
+675px;margin-top: 7px;">
+        <form method="post" action="/product/seach">
+
+            <input type="text" name="zhi" th:value="${val}" style="float:left; width:406px;height:30px" />
+
+
+            <input type="submit"  value="" id="shousuo" style="cursor: pointer;height: 32px;width:78px;float: left;border:
+none;background : url(http://182.92.194.216:2202/GodStatic/images/TB1Z4WGMpXXXXbyaXXX6sGuHVXX-458-458.png);
+    background-position: -125px -58px;"/>
+
+        </form>
+    </div>
+
+</div>
+<section>
+
+
+    <!-------//二-智能硬件--------->
+    <div id="product_hardware">
+
+        <h2 th:if="${category==null}">商品</h2>
+        <h2 th:if="${category!=null}" th:text="${category}"></h2>
+        <a class="prHe1" href=""><img
+                src="http://182.92.194.216:2202/GodStatic/images/product_hardware_01.jpg"></a>
+        <ul id="hardware" style="height: 1258px;" th:each="u,nsStat:${pgs}">
+
+            <li class="hard_li">
+
+                <a th:href="@{'/consumer/details/list/{id}'(id=${u.mp_id})}"><img th:src="'http://182.92.194.216:2202/PGStatic/image/'+${u.mp_image}"
+                                style="width: 236px;height: 200px;"></a>
+                <h4><a th:href="@{'/consumer/details/list/{id}'(id=${u.mp_id})}" th:text="${u.mp_name}">小米路由器3</a></h4>
+                <p th:text="${u.mp_descpiption}"></p>
+                <span th:text="'￥'+${u.mp_price}"></span>
+            </li>
+
+
+
+        </ul>
+
+        <div id="page" th:if="${category!=null}">
+
+
+            <a th:href="@{'/product/findbyid/{mpc_id}/{pgindex}'(mpc_id=${pgs.get(0).getMll_product_category().getMpc_id()},pgindex=0)}">首页</a>
+            <a th:href="@{'/product/findbyid/{mpc_id}/{pgindex}'(mpc_id=${pgs.get(0).getMll_product_category().getMpc_id()},pgindex=${danye}-1)}">上一页</a>
+            <a th:href="@{'/product/findbyid/{mpc_id}/{pgindex}'(mpc_id=${pgs.get(0).getMll_product_category().getMpc_id()},pgindex=${danye}+1)}">下一页</a>
+            <a th:href="@{'/product/findbyid/{mpc_id}/{pgindex}'(mpc_id=${pgs.get(0).getMll_product_category().getMpc_id()},pgindex=${total})}">尾页</a>
+
+
+
+
+            <div style="float: left;line-height: 35px;margin-left: 20px;">共<span th:text="${total}">&nbsp;&nbsp;</span>页</div>
+            <div style="float: left;line-height: 35px;margin-left: 20px;"><span th:text="'当前页码 '+${danye}"></span></div>
+        </div>
+
+
+        <div id="page" th:if="${category==null}">
+
+
+
+                <a th:href="@{'/product/seach/{zhi}/{pgindex}'(zhi=${val},pgindex=0)}">首页</a>
+                <a th:href="@{'/product/seach/{zhi}/{pgindex}'(zhi=${val},pgindex=${danye<1?1:danye}-1)}">上一页</a>
+                <a th:href="@{'/product/seach/{zhi}/{pgindex}'(zhi=${val},pgindex=${danye==total-1?danye-1:danye}+1)}">下一页</a>
+                <a th:href="@{'/product/seach/{zhi}/{pgindex}'(zhi=${val},pgindex=${total-1})}">尾页</a>
+
+
+            <!--<div style="float: left"><input type="text" name="names"style="width: 100px;height:
+25px;margin-left: 10px;"><button style="margin-left: 10px;height: 30px">跳转
+            </button></div>-->
+            <div style="float: left;line-height: 35px;margin-left: 20px;">共<span th:text="${total}">&nbsp;&nbsp;</span>页</div>
+            <div style="float: left;line-height: 35px;margin-left: 20px;"><span th:text="'当前页码 '+${danye+1}"></span></div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+</section>
+<footer id="Customer">
+    <ul class="">
+        <li>
+            <a href=""><span></span>预约维修服务</a>
+        </li>
+        <span>丨</span>
+        <li>
+            <a href=""><span></span>7天无理由退货</a>
+        </li>
+        <span>丨</span>
+        <li>
+            <a href=""><span></span>15天免费换货</a>
+        </li>
+        <span>丨</span>
+        <li>
+            <a href=""><span></span>满150元包邮</a>
+        </li>
+        <span>丨</span>
+        <li>
+            <a href=""><span></span>520余家售后网点</a>
+        </li>
+    </ul>
+    <div id="hps">
+        <div class="rt">
+            <div>400-100-5678</div>
+            <p>周一至周日 8:00-18:00</p>
+            <p>（仅收市话费）</p>
+            <a href="#" class="hv">
+                <img src="images/24h_03.jpg">
+            </a>
+        </div>
+        <ul class="help">
+            <li>
+                <h4>帮助中心</h4>
+                <a href="">账户管理</a>
+                <a href="">购物指南</a>
+                <a href="">订单操作</a>
+            </li>
+            <li>
+                <h4>服务支持</h4>
+                <a href="">售后政策</a>
+                <a href="">自助服务</a>
+                <a href="">相关下载</a>
+            </li>
+            <li>
+                <h4>线下门店</h4>
+                <a href="">小米之家</a>
+                <a href="">服务网点</a>
+                <a href="">零售网点</a>
+            </li>
+            <li>
+                <h4>关于小米</h4>
+                <a href="">了解买来乐</a>
+                <a href="">加入买来乐</a>
+                <a href="">联系我们</a>
+            </li>
+            <li>
+                <h4>关注我们</h4>
+                <a href="">新浪微博</a>
+                <a href="">乐部落</a>
+                <a href="">官方微信</a>
+            </li>
+            <li>
+                <h4>特色服务</h4>
+                <a href="">F码通道</a>
+                <a href="">乐移动</a>
+                <a href="">防伪查询</a>
+            </li>
+        </ul>
+    </div>
+</footer>
+<script type="text/javascript" src="http://182.92.194.216:2202/GodStatic/js/shouye.js">
+
+</script>
+<script type="text/javascript">
+    function loginOut() {
+        $.ajax({
+            url:'/loginOut/User',
+            type:'post',
+            success:function (data) {
+                if(data.flag){
+                    window.location.href='http://127.0.0.1:81/login.html';
+                }
+            }
+        });
+    }
+    $(function () {
+        $.ajax({
+            url: '/getUser',
+            type: 'post',
+            success: function (data) {
+                if (data) {
+                    var user = "<a href='/User/getUser/PersonalCenter'>"+data.mu_user_name+"</a><a  onclick='loginOut()'>退出登录</a>";
+                } else {
+                    var user = "<a href='http://127.0.0.1:81/login.html'>登录</a><a href='http://127.0.0.1:81/register.html'>注册</a>";
+                }
+                $("#User").append(user);
+            }
+        });
+    })
+</script>
+</body>
+</html>

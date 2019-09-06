@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小米账号-注册</title>
+    <link rel="icon" type="image/x-icon" href="http://182.92.194.216:2202/GJStatic/img/favicon.ico"/>
+    <link rel="stylesheet" href="http://182.92.194.216:2202/GJStatic/layui/css/layui.css">
+    <script src="http://182.92.194.216:2202//GJStatic/js/jquery-1.8.3.min.js"></script>
+    <script src="http://182.92.194.216:2202/GJStatic/layui/layui.all.js"></script>
+
+    <style>
+
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        fieldset {
+            display: inline-block;
+            width: 340px;
+            margin-top: 70px;
+            color: #999;
+            border: none;
+            border-top: 1px solid #999;
+            text-align: center;
+            font-size: 13px;
+            margin-left: 33px;
+        }
+
+        .zong {
+            width: 100%;
+            height: 100%;
+        }
+
+        .top {
+            padding-top: 10px;
+            padding-left: 100px;
+            /* width: 100%;
+             height: 100px;
+             background-image: url(http://182.92.194.216:2202/GJStatic/img/logo.png);
+             background-repeat: no-repeat;
+             background-position: 110px;*/
+        }
+
+        .banner {
+            width: 100%;
+            height: 588px;
+            /*background: url(http://182.92.194.216:2202/GJStatic/img/CC9.jpg) no-repeat center;*/
+        }
+
+        .banner_box {
+            height: 588px;
+            width: 700px;
+            background: white;
+            position: absolute;
+            right: 70px;
+            margin-right: 15%;
+        }
+
+        .banner_box input {
+            height: 20px;
+            width: 250px;
+            margin-top: 30px;
+            margin-left: 20px;
+            font-size: 13px;
+        }
+
+        .banner_box table .bd {
+            text-align: right;
+            padding-top: 30px;
+            font-size: 15px;
+            color: #888888;
+            line-height: 30px;
+        }
+
+        .banner_box table #sub {
+            margin-left: 145px;
+        }
+
+        .banner_box table #getVerifyCode {
+            height: 30px;
+            width: 120px;
+            margin-top: 0px;
+            margin-left: 20px;
+            font-size: 8px;
+            line-height: 30px;
+        }
+
+        .dl {
+            display: inline-block;
+            margin-left: 140px;
+            margin-top: 25px;
+            font-size: 22px;
+            color: #f56600;
+            margin-right: 15px;
+            font-family: "微软雅黑";
+        }
+
+        .sm {
+            display: inline-block;
+            margin-top: 30px;
+            font-size: 22px;
+            margin-left: 15px;
+            color: black;
+            font-family: "微软雅黑";
+
+        }
+
+        .z_zc {
+            font-size: 11px;
+            float: right;
+            margin-top: 10px;
+            margin-right: 18px;
+        }
+
+        .y_zc {
+            font-size: 11px;
+            float: left;
+            margin-top: 10px;
+            margin-left: 18px;
+        }
+
+        .img_t {
+            margin-left: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .img_tc {
+            cursor: pointer;
+            margin-left: 80px;
+            margin-top: 10px;
+        }
+
+        .img {
+            height: 30px;
+            width: 400px;
+            margin: 30px auto;
+            position: absolute;
+            bottom: 13px;
+        }
+
+        .zhdl {
+            visibility: visible;
+        }
+
+        .smdl {
+            visibility: hidden;
+            position: absolute;
+            top: 290px;
+            right: 117px;
+        }
+
+        .smdl p {
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .footer {
+            width: 100%;
+            height: 170px;
+            background-color: white;
+            color: #757575;
+            /*font-weight:bold;*/
+            font-size: 14px;
+        }
+
+        .footer p {
+            padding-top: 30px;
+            text-align: center;
+            color: #757575;
+            /* color: #F56600;*/
+        }
+
+        .footer li {
+            float: left;
+            list-style: none;
+            margin-left: 30px;
+            font-size: 14px;
+        }
+
+        .footer .li {
+            margin-left: 37%;
+            font-size: 14px;
+        }
+
+        .footer ul {
+            padding-top: 90px;
+        }
+
+        .footer a {
+            color: #757575;
+        }
+
+        .msg {
+            margin-top: 25px;
+            margin-left: 95px;
+            color: #999;
+        }
+
+        .sex {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<!--页面大容器-->
+<div class="zong">
+    <!--页面头部部分-->
+    <div class="top">
+        <a href="https://www.mi.com/micc9/"><img src="http://182.92.194.216:2202/GJStatic/img/logo.png"></a>
+    </div>
+    <!--页面中部部分-->
+    <div class="banner">
+        <div class="banner_box">
+            <div class="zhdl" id="zhdl">
+                <form method="post" action="">
+                    <table width="700px">
+                        <tr>
+                            <td colspan="2"><span class="dl">账号注册</span></td>
+                        </tr>
+                        <tr>
+                            <td class="bd">用户名：</td>
+                            <td><input type="text" id="username" onblur="checkUsername()"/></td>
+                        </tr>
+                        <tr>
+                            <td class="bd">设置密码：</td>
+                            <td><input type="password" id="password" onblur="checkpwd()"/></td>
+                        </tr>
+                        <tr>
+                            <td class="bd">确认密码：</td>
+                            <td><input type="password" id="confirmPassword" onblur="checkconfirmpwd()"/></td>
+                        </tr>
+                        <tr>
+                            <td class="bd">手机号码：</td>
+                            <td><input type="text" id="mobile" onblur="checkMobile()"/></td>
+                        </tr>
+                        <tr>
+                            <td class="bd">短信验证码：</td>
+                            <td><input type="text" id="verifyCode" onblur="checkVerifyCode()"/>
+                                <input type="button" id="getVerifyCode"
+                                       class="layui-btn layui-btn-radius layui-btn-primary" value="获取短信验证码"/>
+                        </tr>
+                        <tr>
+                            <td class="bd">邮箱：</td>
+                            <td><input type="text" id="email" onblur="checkemail()"/></td>
+                        </tr>
+                        <!--<tr>
+                            <td class="bd">地址：</td>
+                            <td><input type="text" id="address" onblur="checkaddress()"/></td>
+                        </tr>-->
+                        <tr>
+                            <td colspan="2"><input onmouseover="this.style.cursor='pointer'"
+                                                   style="background-color: #F56600; border: none; color: white;"
+                                                   type="button" value="立即注册" id="sub"></td>
+                        </tr>
+                    </table>
+                </form>
+                <div class="msg">
+                    <label>
+                        注册帐号即表示您同意并愿意遵守小米 <a href="cn.html"
+                                             class="inspect_link agreement_link" title="用户协议"
+                                             target="_blank">用户协议</a>和<a href="privacy.html"
+                                                                         class="inspect_link privacy_link"
+                                                                         title=" 隐私政策 " target="_blank"> 隐私政策 </a>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--页面底部部分-->
+<div class="footer">
+    <ul>
+        <li class="li">
+            <a href="#">简体</a>
+        </li>
+        <li>|</li>
+        <li>
+            <a href="#">繁体</a>
+        </li>
+        <li>|</li>
+        <li>
+            <a href="#">英语</a>
+        </li>
+        <li>|</li>
+        <li>
+            <a href="#">常见问题</a>
+        </li>
+    </ul>
+    <p class="nf-intro">小米公司版权所有-京ICP备10046444-<a class="beian-record-link" target="_blank"
+                                                  href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134"><span><img
+            src="http://182.92.194.216:2202/GJStatic/img/ghs.png"></span>京公网安备11010802020134号</a>-京ICP证110507号</p>
+</div>
+
+<script type="text/javascript">
+    var code = 123456;
+
+    //验证用户名
+    function checkUsername() {
+        var reg = /^[-_a-zA-Z0-9]{4,16}$/;
+        var username = $("#username");
+        if (username.val() == "") {
+            //username.focus();
+            layer.msg('用户名不能为空');
+            return false;
+        } else if (!reg.test(username.val())) {
+            username.focus();
+            layer.msg("用户名（4到16位，字母数字下划线，减号）");
+            return false;
+        } else {
+            $.ajax({
+                url: '/User/checkusername/' + username.val(),
+                type: 'post',
+                success: function (data) {
+                    if (data.flag == false) {
+                        layer.msg('用户名已存在');
+                        username.focus()
+                        return false;
+                    }
+                },
+                errot: function () {
+                    layer.msg('请求出错,请联系管理员');
+                }
+            });
+        }
+        return true;
+    }
+
+    //验证密码
+    function checkpwd() {
+        var reg = /^(\w){6,20}$/;
+        var pwd = $("#password");
+        if (pwd.val() == "") {
+            //pwd.focus();
+            layer.msg('密码不能为空');
+            return false;
+        } else if (!reg.test(pwd.val())) {
+            pwd.focus();
+            layer.msg('密码只能输入6-20个字母、数字、下划线');
+            return false;
+        }
+        return true;
+    }
+
+    //确认密码
+    function checkconfirmpwd() {
+        var pwd = $("#password");
+        var confirmPassword = $("#confirmPassword");
+        if (confirmPassword.val() == "") {
+            //confirmPassword.focus();
+            layer.msg('密码不能为空');
+            return false;
+        } else if (confirmPassword.val() != pwd.val()) {
+            layer.msg('两次密码输入不一致');
+            return false;
+        }
+        return true;
+    }
+
+    //验证手机号码
+    function checkMobile() {
+        var reg = /^1[3456789]\d{9}$/;
+        var mobile = $("#mobile");
+        if (mobile.val() == "") {
+            //mobile.focus();
+            layer.msg("请输入手机号码");
+            return false;
+        } else if (!reg.test(mobile.val())) {
+            mobile.focus();
+            layer.msg("手机号码有误");
+            return false;
+        }
+        return true;
+    }
+
+    //验证验证码
+    function checkVerifyCode() {
+        var verifyCode = $("#verifyCode");
+        var mobile = $("#mobile");
+        if (verifyCode.val() == "") {
+            //verifyCode.focus();
+            layer.msg("请输入验证码");
+            return false;
+        } else if (verifyCode.val().length != 6) {
+            //verifyCode.focus();
+            layer.msg("请输入6位数的验证码");
+            return false;
+        } else if (code == 000000) {
+            mobile.focus();
+            layer.msg("该手机号已被注册，请换一个试试");
+            return false;
+        } else if (verifyCode.val() != code) {
+            //verifyCode.focus();
+            layer.msg("验证码输入错误");
+            return false;
+        }
+        return true;
+    }
+
+    //验证邮箱
+    function checkemail() {
+        var reg = /^[a-zA-Z0-9]{1,10}@[a-zA-Z0-9]{1,5}\.[a-zA-Z0-9]{1,5}$/;
+        var email = $("#email");
+        if (email.val() == "") {
+            //email.focus();
+            layer.msg("请输入邮箱");
+            return false;
+        } else if (!reg.test(email.val())) {
+            email.focus();
+            layer.msg("请输入正确的邮箱格式");
+            return false;
+        }
+        return true;
+    }
+
+    //验证地址
+    /*function checkaddress() {
+        var address = $("#address");
+        if (address.val() == "") {
+            //address.focus();
+            layer.msg("请输入地址");
+            return false;
+        }
+        return true;
+    }*/
+
+    var time1 = 5;
+    var miao;
+
+    function time() {
+        $("#getVerifyCode").addClass("layui-btn layui-btn-radius layui-btn-disabled");
+        $("#getVerifyCode").val("重新发送(" + time1 + ")");
+        miao = setInterval(function () {
+            time1 = time1 - 1;
+            if (time1 >= 0) {
+                $("#getVerifyCode").val("重新发送(" + time1 + ")");
+            } else {
+                time1 = 5;
+                $("#getVerifyCode").removeClass("layui-btn layui-btn-radius layui-btn-disabled");
+                $("#getVerifyCode").addClass("layui-btn layui-btn-radius layui-btn-primary");
+                $("#getVerifyCode").val("获取验证码");
+                clearInterval(miao);
+            }
+        }, 1000)
+    }
+
+    //验证码发送
+    $("#getVerifyCode").click(function () {
+        if (checkMobile()) {
+            var reg = /^1[3456789]\d{9}$/;
+            var verifyCode = $("#verifyCode");
+            var mobile = $("#mobile");
+            if (reg.test(mobile.val())) {
+                var ii = layer.load();
+                //此处用setTimeout演示ajax的回调
+                setTimeout(function () {
+                    layer.close(ii);
+                    time();
+                    $.ajax({
+                        url: '/User/getVerification/' + mobile.val(),
+                        type: 'post',
+                        success: function (data) {
+                            code=data;
+                            layer.msg("验证码" + data);
+                            if (data != 000000) {
+                                layer.msg("验证码" + data);
+                            } else {
+                                mobile.focus();
+                                layer.msg("该手机已被注册，请换一个试试");
+                            }
+                        },
+                        error: function () {
+                            layer.msg('请求出错,请联系管理员');
+                        }
+                    });
+                }, 1000);
+            }
+        }
+        return false;
+    });
+
+    $('#sub').on('click', function () {
+            var username = $("#username").val();
+            var pwd = $("#password").val();
+            var mobile = $("#mobile").val();
+            var email = $("#email").val();
+            /*var address = $("#address").val();*/
+            if (checkUsername() && checkpwd() && checkconfirmpwd() && checkMobile() && checkVerifyCode() && checkemail() ) {
+                $.ajax({
+                    url: '/User/Register/' + username + '/' + pwd + '/' + mobile + '/' + email ,
+                    type: 'post',
+                    success: function (data) {
+                        if(data.flag==true){
+                            var ii = layer.load();
+                            //此处用setTimeout演示ajax的回调
+                            setTimeout(function () {
+                                layer.close(ii);
+                                window.location.href = 'login.html';
+                            }, 1500);
+                        }else {
+                            layer.msg(data.mess);
+                        }
+                    },
+                    error: function () {
+                        layer.msg('请求出错,请联系管理员');
+                    }
+                });
+            }else {
+                layer.msg('请填写正确的信息');
+            }
+        }
+    );
+</script>
+</body>
+</html>

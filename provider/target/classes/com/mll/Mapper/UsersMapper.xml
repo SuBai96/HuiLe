@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mll.Mapper.UsersMapper">
+    <select id="getUser" resultType="MLL_User">
+        SELECT *  FROM `MLL`.`MLL_USERS` WHERE mu_user_name=#{username}
+    </select>
+    <select id="checkUserName" resultType="int">
+        SELECT COUNT(*) FROM MLL_USERS WHERE mu_user_name=#{username}
+    </select>
+    <select id="checkMobile" resultType="int">
+        SELECT COUNT(*) FROM MLL_USERS WHERE mu_mobile=#{mobile}
+    </select>
+    <insert id="resiterUser" parameterType="MLL_User">
+        INSERT INTO `MLL`.`MLL_USERS`(`mu_user_name`,`mu_password`,`mu_headphoto`,`mu_registerTime`,`mu_email`,`mu_mobile`,`mu_status`)
+        VALUES(#{mu_user_name},#{mu_password},#{mu_headphoto},#{mu_registerTime},#{mu_email},#{mu_mobile},#{mu_status})
+    </insert>
+    <select id="ByMobileLoginOrReg" resultType="MLL_User">
+        SELECT *  FROM MLL_USERS WHERE mu_mobile=#{mobile}
+    </select>
+    <update id="ByMobileUpdatePwd">
+        UPDATE `MLL`.`MLL_USERS` SET `mu_password`=#{pwd} WHERE`mu_mobile` =#{mobile}
+    </update>
+    <select id="ByUser_Id" resultType="MLL_User">
+        SELECT `mu_user_id`, `mu_user_name`, `mu_password`, `mu_headphoto`, `mu_registerTime`, `mu_email`, `mu_mobile`, `mu_status`
+        FROM `MLL`.`MLL_USERS` WHERE mu_user_id=#{mu_user_id}
+    </select>
+    <insert id="saveAddress" parameterType="MLL_Receiving">
+      INSERT INTO `MLL`.`MLL_RECEIVING` ( `mu_user_id`, `mr_name`, `mr_mobile`, `mr_address`, `mr_detail_address`, `mr_postal_code`,`mr_default` )
+      VALUES ( #{mu_user_id}, #{mr_name}, #{mr_mobile}, #{mr_address}, #{mr_detail_address}, #{mr_postal_code},#{mr_default} )
+    </insert>
+    <select id="selectAddressCount" resultType="int">
+        SELECT COUNT(*) FROM `MLL`.`MLL_RECEIVING` WHERE mu_user_id=#{mu_user_id}
+    </select>
+    <select id="selectAddress" resultType="MLL_Receiving">
+        SELECT `mr_id`, `mu_user_id`, `mr_name`, `mr_mobile`, `mr_address`, `mr_detail_address`, `mr_postal_code`, `mr_default`
+        FROM `MLL`.`MLL_RECEIVING` WHERE mu_user_id=#{mu_user_id}
+    </select>
+    <delete id="addressDel">
+        DELETE  FROM `MLL`.`MLL_RECEIVING` WHERE `mr_id` = #{mr_id} ;
+    </delete>
+    <select id="ByMr_id"  resultType="MLL_Receiving">
+        SELECT `mr_id`, `mu_user_id`, `mr_name`, `mr_mobile`, `mr_address`, `mr_detail_address`, `mr_postal_code`, `mr_default`
+        FROM `MLL`.`MLL_RECEIVING` WHERE mr_id=#{mr_id}
+    </select>
+    <update id="addressUpdate">
+        UPDATE `MLL`.`MLL_RECEIVING` SET `mr_name` = #{mr_name}, `mr_mobile` = #{mr_mobile}, `mr_address` =#{mr_address}, `mr_detail_address` =#{mr_detail_address} , `mr_postal_code` =#{mr_postal_code}
+        WHERE `mr_id` = #{mr_id} AND mu_user_id=#{mu_user_id}
+    </update>
+    <update id="setDefaultAddress">
+        UPDATE `MLL`.`MLL_RECEIVING` SET `mr_default` = '1' WHERE `mr_id` = #{mr_id} AND mu_user_id=#{mu_user_id}
+    </update>
+    <update id="setDefaultAddress1">
+        UPDATE `MLL`.`MLL_RECEIVING` SET `mr_default` = '0' WHERE `mr_id` != #{mr_id} AND mu_user_id=#{mu_user_id}
+    </update>
+    <update id="userUpdatePwd">
+        UPDATE `MLL`.`MLL_USERS` SET `mu_password` =#{mu_password} WHERE `mu_user_name` = #{mu_user_name}
+    </update>
+    <update id="userUpdateEmail">
+        UPDATE `MLL`.`MLL_USERS` SET `mu_email` = #{mu_email} WHERE `mu_user_name` = #{mu_user_name}
+    </update>
+    <update id="userUpdateMobile">
+        UPDATE `MLL`.`MLL_USERS` SET `mu_mobile` = #{mobile} WHERE `mu_user_name` = #{mu_user_name}
+    </update>
+    <update id="updateUserName">
+        UPDATE `MLL`.`MLL_USERS` SET `mu_user_name` = #{mu_user_name} WHERE `mu_user_id` = #{mu_user_id}
+    </update>
+    <update id="updateUserPhoto">
+        UPDATE `MLL`.`MLL_USERS` SET `mu_headphoto` = #{mu_headphoto} WHERE `mu_user_id` = #{mu_user_id}
+    </update>
+</mapper>

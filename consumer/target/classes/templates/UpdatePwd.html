@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="http://182.92.194.216:2202/GJStatic/layui/css/layui.css">
+    <script src="http://182.92.194.216:2202/GJStatic/js/jquery-1.8.3.min.js"></script>
+    <script src="http://182.92.194.216:2202/GJStatic/layui/layui.all.js"></script>
+</head>
+<body>
+<div class="layui-form-item" style="margin-top: -20px">
+    <label class="layui-form-label" style="margin-top: 0px;margin-left: -20px;font-weight: bolder">原密码</label>
+    <div class="layui-input-inline" style="margin-top: 60px;margin-left: -60px">
+        <input type="password" name="password"required lay-verify="required"placeholder="请输入原密码" autocomplete="off"  class="layui-input" style="width: 300px" onblur="checkpwd()" id="pwd">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label" style="margin-top: 0px;margin-left: -20px;font-weight: bolder">新密码</label>
+    <div class="layui-input-inline" style="margin-top: 30px;margin-left: -60px">
+        <input type="password" required lay-verify="required" placeholder="请输入新密码" autocomplete="off"
+               class="layui-input" style="width: 300px" onblur="checkNewPwd()" id="newPwd">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label" style="margin-top: 0px;margin-left: -20px;font-weight: bolder">确认密码</label>
+    <div class="layui-input-inline" style="margin-top: 30px;margin-left: -60px">
+        <input type="password" id="confirmpwd2" required lay-verify="required" placeholder="重复新密码" autocomplete="off"
+               class="layui-input" style="width: 300px" onblur="checkconfirmpwd()"><span style="margin-left: 150px">密码长度6-20个字母、数字、下划线</span>
+    </div>
+
+</div>
+<div class="layui-form-item" style="width: 420px">
+    <label class="layui-form-label" style="margin-top: 0px;margin-left: -20px;font-weight: bolder">验证码</label>
+    <div class="layui-input-inline" style="margin-top: 30px;margin-left: -56px">
+        <input type="text" required lay-verify="required" placeholder="图片验证码" autocomplete="off" class="layui-input"
+               style="width: 150px" onblur="checkcode()" id="code">
+        <img src="http://127.0.0.1:81/Image" style="margin-left: 300px;margin-top: -60px"/>
+        <a href="javascript:void(0)" style="margin-left: -80px" onclick="SwitchVerificationCode(this)">看不清楚换一张?</a>
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="Save(this)">确定</button>
+        <button type="button" class="layui-btn layui-btn-primary" onclick="Close()">取消</button>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var code = "";
+    function SwitchVerificationCode(obj) {
+        $.ajax({
+            url: '/Image',
+            type: 'post',
+            async: false,
+            success: function (result) {
+                $(obj).prev().prop("src", '/Image');
+            }
+        });
+    }
+
+    function checkpwd() {
+        if ($("#pwd").val() == "") {
+            layer.msg("请输入原密码");
+            return false
+        } else {
+            $.ajax({
+                url: '/User/checkPwd/' + $("#pwd").val(),
+                type: 'post',
+                success: function (data) {
+                    if (data.flag == false) {
+                        layer.msg(data.mess);
+                        return false;
+                    } else {
+                        layer.msg(data.mess);
+                    }
+                }
+            });
+        }
+        return true;
+    }
+
+    $("#code").click(function () {
+        $.ajax({
+            url: '/User/getverificationCode',
+            type: 'post',
+            async: false,
+            success: function (data) {
+                code = data;
+            }
+        });
+    })
+    function checkcode() {
+        if ($("#code").val() == "") {
+            layer.msg("请输入验证码");
+            return false;
+        } else if ($("#code").val() != code) {
+            layer.msg("验证码输入错误");
+            return false;
+        }
+        return true;
+    }
+
+    function checkNewPwd() {
+        var reg = /^(\w){6,20}$/;
+        var newpwd = $("#newPwd");
+        if (newpwd.val() == "") {
+            layer.msg("请输入新密码");
+            return false;
+        } else if (!reg.test(newpwd.val())) {
+            layer.msg("密码格式不正确");
+            return false;
+        }
+        return true;
+    }
+
+    function checkconfirmpwd() {
+        var newpwd = $("#newPwd");
+        var confirmpwd2 = $("#confirmpwd2");
+        if (confirmpwd2.val() == "") {
+            layer.msg("请再次输入密码");
+            return false;
+        } else if (confirmpwd2.val() != newpwd.val()) {
+            layer.msg("密码输入不一致");
+            return false;
+        }
+        return true;
+    }
+
+    function Close() {
+        parent.layer.close(parent.layer.getFrameIndex(window.name))//关闭弹出层
+    }
+
+    function Save(obj) {
+        var pwd = $(obj).parent().parent().prev().prev().prev().find("div").find("input").val();//原密码
+        var newpwd = $(obj).parent().parent().prev().prev().find("div:eq(0)").find("input").val();//新密码
+        var confirmpwd = $(obj).parent().parent().prev().prev().find("div:eq(1)").find("input").val();//确认面膜
+        var code = $(obj).parent().parent().prev().find("div").find("input").val();//验证码
+        if (checkpwd() && checkNewPwd() && checkconfirmpwd() && checkcode()) {
+            var ii = layer.load();
+            //此处用setTimeout演示ajax的回调
+            setTimeout(function () {
+                layer.close(ii);
+                $.ajax({
+                    url: '/User/userUpdatePwd',
+                    data: {'password': newpwd},
+                    type: 'post',
+                    success: function (data) {
+                        if (data.flag==true) {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name))//关闭弹出层
+                        } else {
+                            layer.msg(data.mess);
+                        }
+                    }
+                });
+            }, 800);
+        }
+    }
+</script>
+</html>

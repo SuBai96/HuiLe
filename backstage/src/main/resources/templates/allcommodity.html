@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="http://182.92.194.216:2202/PGPengStatic/layui/css/layui.css"  media="all">
+</head>
+<body>
+<div id="context" style="width: 99%;height: 565px;">
+    <table border="1" width="100%" style="height: 100%">
+        <tr style="height: 50px">
+            <th>商品序号</th>
+            <th>商品名称</th>
+            <th>商品描述</th>
+            <th>商品价格</th>
+            <th>商品数量</th>
+            <th>商品图片</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+    </table>
+</div>
+<div id="demo7"></div>
+<script src="http://182.92.194.216:2202/PGPengStatic/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+        //完整功能
+        laypage.render({
+            elem: 'demo7'
+            ,count: 20
+               /* 'limit',*/
+            ,layout: ['count', 'prev', 'page', 'next',  'refresh', 'skip']
+            ,jump: function(obj){
+                console.log(obj)
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

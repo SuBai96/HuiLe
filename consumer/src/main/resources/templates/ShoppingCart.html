@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html xml:lang="zh-CN" lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <script type="text/javascript" src="http://127.1:81/js/jquery-1.8.3.min.js"></script>
+
+    <link rel="stylesheet" href="http://182.92.194.216:2202/PGStatic/css/Cart.css"/>
+    <link rel="stylesheet" href="http://182.92.194.216:2202/PGStatic/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="http://182.92.194.216:2202/GodStatic/css/style.css"/>
+    <!--<link rel="stylesheet" href="http://182.92.194.216:2202/GodStatic/css/myPlugin.css">-->
+    <link rel="stylesheet" href="http://182.92.194.216:2202/GodStatic/css/slider.css"/>
+</head>
+<style type="text/css">
+    .shu {
+        width: 100px;
+        height: 32px;
+        border: 1px solid #ccc;
+        background: #fff;
+        text-align: center;
+        margin-left: -40px;
+        line-height: 32px;
+    }
+
+    .shu span {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+    }
+
+    .shu .sub {
+
+        border-right: 1px solid #ccc;
+        padding-right: 12px;
+        /*text-align:center;
+        height:30px;*/
+    }
+
+    .shu .plus {
+        border-left: 1px solid #ccc;
+        padding-left: 12px;
+    }
+
+    .shu input[type="text"] {
+        border: none;
+        width: 40px;
+        text-align: center;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $("#nodeng").hide();
+        $("#kong").hide();
+        $("#ok").hide();
+    })
+</script>
+<body style="overflow:Scroll;overflow-x:hidden">
+<div id="tou">
+    <span class="log"><img src="http://182.92.194.216:2202/PGStatic/image/Cart/lo.jpg" width="100px"
+                           height="100px"></span>
+    <span class="titlegwc">我的购物车 &nbsp;&nbsp;&nbsp;<span class="wenzi">温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</span></span>
+    <span class="dengluzc"><!--<a href="">登陆 |</a> <a href="">注册</a>--></span>
+    <hr class="xiantop"/>
+</div>
+
+
+<div class="bjtu">
+
+    <div id="nodeng"><!--判断用户登陆没有,没登陆则显示这个div-->
+        <span class="beitu"><img src="http://182.92.194.216:2202/PGStatic/image/Cart/gwc.png"></span>
+        <div class="weiyi">
+            <div class="gwcwz"><strong>您的购物车还是空的！</strong></div>
+            <div class="gwcwz1"><strong>登录后将显示您之前加入的商品</strong></div>
+            <div class="anniu">
+                <button type="button" class="layui-btn layui-btn-warm"><strong>立即登陆</strong></button>
+            </div>
+        </div>
+        <hr class="xian1"/>
+        <hr class="xian2"/>
+        <span class="tuijian">为您推荐</span>
+    </div>
+
+
+    <div id="kong"><!--登陆了就显示这个div(购物车是空的话也显示这个div)-->
+        <span class="beitu"><img src="http://182.92.194.216:2202/PGStatic/image/Cart/gwc.png"></span>
+        <div class="weiyi">
+            <div class="gwcwz"><strong>您的购物车还是空的！</strong></div>
+            <div class="gwcwz1"><strong>抓紧时间去购物吧~</strong></div>
+        </div>
+        <hr class="xian1"/>
+        <hr class="xian2"/>
+        <span class="tuijian">为您推荐</span>
+    </div>
+
+    <div id="ok"><!--购物车有商品显示这个div-->
+        <div>
+            <span id="demo1" style="margin-left: 42%"></span>
+            <div class="mulu"><!--购物车目录-->
+                <ul>
+                    <li>全选<input type="checkbox" name="b" style="padding-top: 100px"></li>
+                    <li>商品图片</li>
+                    <li>商品名称</li>
+                    <li>单价</li>
+                    <li>数量</li>
+                    <li>型号</li>
+                    <li>小计</li>
+                    <li>操作</li>
+                </ul>
+            </div>
+            <span id="ShoppingCart">
+            <!--<div class='sp'>
+            <ul>
+            <div class='sp1'><input type='checkbox' name='a' onclick='qx(this)' class='ab'><img  width='70px' height='70px' src="+data.list[i].mp_image+"></div>
+            <div class='wz'><strong style='font-size: 13px'>"+data.list[i].mp_name+"</strong></div>
+                <div class='qian'>"+data.list[i].ms_price+"</div>
+            <div class='shu' ><span onclick='sub(this)' class='sub'>-</span><input class='yzquantity'  type='text' value='1' readonly><span onclick='plus(this,"+data.list[i].mp_stock+")' class='plus'>+</span></div>
+            <div class='zong' style='font-size: 12px'>"+data.list[i].ms_model+data.list[i].ms_colour+"</div>
+            <div class='dj'>"+data.list[i].dj+"<input type='hidden' value="+data.list[i].ms_pid+"></div>
+                <div class='shan'><a class='shanchu' onclick='del(this)'>×</a><input type='hidden' value="+data.list[i].ms_id+"></div>
+            </ul>
+            </div>-->
+                <!--  用来方数据-->
+        </span>
+
+
+            <div class="jiesuan">总计:￥<span id="zongjiaqian" style="color: red;font-size: 25px">0</span>&nbsp;<button
+                    type="button" class="layui-btn layui-btn-primary" id="jiesuan"><strong>结算</strong></button>
+            </div>
+
+            <hr class="xian1"/>
+            <hr class="xian2"/>
+            <span class="tuijian">为您推荐</span>
+        </div>
+
+
+    </div>
+
+    <!--商品推荐(4个)-->
+    <ul id="tuijianshangping">
+        <li th:each="t,nsStat:${tui}">
+            <div class="tuijian1">
+                <span class="tuijiantp"><img th:src="${t.getMp_image()}" width="200px"
+                                             href="200px"></span>
+                <div class="tuijianzi" th:text="${t.getMp_file_name()}"></div>
+                <div class="tuijianchakan">
+                    <button type="button" class="layui-btn layui-btn-primary"><strong>点击查看</strong></button>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <button type="button" class="layui-btn layui-btn-primary"><strong>换一批</strong></button>
+    <!--底部-->
+    <footer id="Customer">
+        <ul class="">
+            <li>
+                <a href=""><span></span>预约维修服务</a>
+            </li>
+            <span>丨</span>
+            <li>
+                <a href=""><span></span>7天无理由退货</a>
+            </li>
+            <span>丨</span>
+            <li>
+                <a href=""><span></span>15天免费换货</a>
+            </li>
+            <span>丨</span>
+            <li>
+                <a href=""><span></span>满150元包邮</a>
+            </li>
+            <span>丨</span>
+            <li>
+                <a href=""><span></span>520余家售后网点</a>
+            </li>
+        </ul>
+        <div id="hps">
+            <div class="rt">
+                <div>400-100-5678</div>
+                <p>周一至周日 8:00-18:00</p>
+                <p>（仅收市话费）</p>
+                <a href="#" class="hv">
+                    <img src="http://182.92.194.216:2202/GodStatic/images/24h_03.jpg">
+                </a>
+            </div>
+            <ul class="help">
+                <li>
+                    <h4>帮助中心</h4>
+                    <a href="">账户管理</a>
+                    <a href="">购物指南</a>
+                    <a href="">订单操作</a>
+                </li>
+                <li>
+                    <h4>服务支持</h4>
+                    <a href="">售后政策</a>
+                    <a href="">自助服务</a>
+                    <a href="">相关下载</a>
+                </li>
+                <li>
+                    <h4>线下门店</h4>
+                    <a href="">小米之家</a>
+                    <a href="">服务网点</a>
+                    <a href="">零售网点</a>
+                </li>
+                <li>
+                    <h4>关于小米</h4>
+                    <a href="">了解买来乐</a>
+                    <a href="">加入买来乐</a>
+                    <a href="">联系我们</a>
+                </li>
+                <li>
+                    <h4>关注我们</h4>
+                    <a href="">新浪微博</a>
+                    <a href="">乐部落</a>
+                    <a href="">官方微信</a>
+                </li>
+                <li>
+                    <h4>特色服务</h4>
+                    <a href="">F码通道</a>
+                    <a href="">乐移动</a>
+                    <a href="">防伪查询</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <footer id="ft">
+        <div id="footer">
+            <div class="rt">
+                <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/v-logo-4.gif"></a>
+                <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/v-logo-1.png"></a>
+                <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/v-logo-2.png"></a>
+                <a href="#"><img src="http://182.92.194.216:2202/GodStatic/images/v-logo-3.png"></a>
+            </div>
+
+            <div class="lt">
+                <a href="#">买来乐商城</a>丨
+                <a href="#">MIUI</a>丨
+                <a href="#">乐聊</a>丨
+                <a href="#">多看书城</a>丨
+                <a href="#">买来乐路由器</a>丨
+                <a href="#">视频电话</a>丨
+                <a href="#">买来乐后院</a>丨
+                <a href="#">买来乐天猫店</a>丨
+                <a href="#">买来乐淘宝直营店</a>丨
+                <a href="#">买来乐网盟</a>丨
+                <a href="#">问题反馈</a>丨
+                <a href="#">Select Region</a>
+                <p>
+                    &copy;<a href="#">mi.com</a>京ICP证110507号
+                    <a href="#"> 京ICP备10046444号 </a>
+                    <a href="#"> 京公网安备11010802020134号</a>
+                    <a href="#">京网文[2014]0059-0009号</a>
+                </p>
+                违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试
+            </div>
+        </div>
+        <!--<div class="btm"> </div>-->
+    </footer>
+
+</div>
+
+</body>
+
+
+<script src="http://182.92.194.216:2202/PGStatic/layui/layui.all.js"></script>
+
+<script type="text/javascript">
+    var pageindex = 1;//页码数
+    var pages = 0;//总页数
+    var Count = 0;//记录数
+    $(function () {
+        loadShoppingCart(pageindex);
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage
+                , layer = layui.layer;
+            //总页数低于页码总数
+            laypage.render({
+                elem: 'demo1'
+                , count: Count //数据总数
+                , limit: 4
+                , jump: function (obj) {
+                    loadShoppingCart(obj.curr);
+                }
+            });
+        });
+        $.ajax({
+            url: '/getUser',
+            type: 'post',
+            success: function (data) {
+                if (data) {
+                    var user = "<a href='/User/getUser/PersonalCenter'>" + data.mu_user_name + "</a>&nbsp;&nbsp;&nbsp;&nbsp;<a  onclick='loginOut()'>退出登录</a>";
+                } else {
+                    var user = "<a href='http://127.0.0.1:81/login.html'>登录</a><a href='http://127.0.0.1:81/register.html'>注册</a>";
+                }
+                $(".dengluzc").append(user);
+            }
+        });
+    })
+
+    function loadShoppingCart(obj) {
+        $.ajax({
+            url: '/cart/ShoppingCartAll',
+            type: 'post',
+            data: {'pageindex': obj},
+            async: false,
+            success: function (data) {
+                if (data) {
+                    if (data.list.length != 0) {
+                        pages = data.pages;
+                        Count = data.total;
+                        $("#nodeng").hide();
+                        $("#ok").show();
+                        $("#kong").hide();
+                        var div = "";
+                        for (var i = 0; i < data.list.length; i++) {
+                            div += "<div class='sp'><ul><div class='sp1'><input type='checkbox' name='a' onclick='qx(this)' class='ab'><img  width='70px' height='70px' src=" + data.list[i].mp_image + "></div><div class='wz'><strong style='font-size: 13px'>" + data.list[i].mp_name + "</strong></div><div class='qian'>" + data.list[i].ms_price + "</div><div class='shu' ><span onclick='sub(this)' class='sub'>-</span><input class='yzquantity'  type='text' value=" + data.list[i].ms_number + "  readonly><span onclick='plus(this," + data.list[i].mp_stock + ")' class='plus'>+</span></div><div class='zong' style='font-size: 12px'>" + data.list[i].ms_model + data.list[i].ms_colour + "</div><div class='dj'>" + data.list[i].dj + "<input type='hidden' value=" + data.list[i].ms_pid + "></div><div class='shan'><a class='shanchu' onclick='del(this)'>×</a><input type='hidden' value=" + data.list[i].ms_id + "></div></ul></div>";
+                        }
+                        $("#ShoppingCart").html(div);
+                    } else {
+                        $("#nodeng").hide();
+                        $("#ok").hide();
+                        $("#kong").show();
+                    }
+                } else {//没有登陆
+                    $("#nodeng").show();
+                    $("#ok").hide();
+                }
+            }
+        });
+    }
+
+    function sub(psid) {
+        var price = $(psid).parent().prev().text();//单价
+        var dj = $(psid).parent().next().next().text();//小计
+        var yzquantity = $(psid).next().val();//购买数量
+        var zj = 0;
+        if (yzquantity > 0) {
+            if (yzquantity == 1) {
+                return;
+            } else {
+                yzquantity--;
+                $(psid).next().val(yzquantity);
+                if ($(psid).parent().prev().prev().prev().find("input").is(":checked")) {//选中的
+                    for (var i = 0; i < $(".ab").size(); i++) {
+                        if ($(".ab:eq(" + i + ")").is(":checked")) {//选中的
+                            zj += Number($(".ab:eq(" + i + ")").parent().next().next().text()) * Number($(".ab:eq(" + i + ")").parent().next().next().next().find("input").val());
+                        }
+                    }
+                    $("#zongjiaqian").text(zj);
+                    $(psid).parent().next().next().text(price * yzquantity);
+                } else {//没有选中
+                    $(psid).parent().next().next().text(price * yzquantity);
+                }
+            }
+        }
+    }
+
+    //加
+    function plus(psid, stock) {
+        var price = $(psid).parent().prev().text();//单价
+        var yzquantity = $(psid).prev().val();//购买数量
+        var dj = $(psid).parent().next().next().text();//小计
+        var zj = 0;
+        if (yzquantity == stock) {//不能大于最大库存
+            $(psid).prev().val(yzquantity);
+            layer.msg('不能超过最大库存~');
+        } else if (yzquantity > 0) {
+            yzquantity++;
+            $(psid).prev().val(yzquantity);
+            if ($(psid).parent().prev().prev().prev().find("input").is(":checked")) {//选中的
+                $(psid).parent().next().next().text(price * yzquantity);
+                for (var i = 0; i < $(".ab").size(); i++) {
+                    if ($(".ab:eq(" + i + ")").is(":checked")) {//选中的
+                        zj += Number($(".ab:eq(" + i + ")").parent().next().next().text()) * Number($(".ab:eq(" + i + ")").parent().next().next().next().find("input").val());
+                    }
+                }
+                $("#zongjiaqian").text(zj);
+            } else {//没有选中
+                $(psid).parent().next().next().text(+price * yzquantity);
+            }
+        }
+    }
+
+    function del(obj) {//删除购物车中的指定商品
+        var msid = $(obj).next().val();//购物车编号
+        var sp = $(obj).parent().parent();
+        if (confirm("确认删除吗?")) {
+            $.ajax({
+                url: '/cart/delete/' + msid,
+                type: 'post',
+                success: function (data) {
+                    if (data.flag == true) {//代表删除成功
+                        sp.remove();
+                        loadShoppingCart(1);
+                    } else//代表删除失败
+                    {
+                        layer.msg(data.mess);
+                        window.location.href = 'login.html';
+                    }
+                },
+                error: function () {//数据库异常
+                    layer.msg('服务器异常,请稍等......');
+                }
+            });
+        }
+    }
+
+    $("input[name='b']").click(function () {
+        //判断当前点击的复选框处于什么状态$(this).is(":checked") 返回的是布尔类型
+        if ($(this).is(":checked")) {
+            $("input[name='a']").prop("checked", true);
+            var zj = 0;
+            for (var i = 0; i < $(".ab").size(); i++) {
+                zj += Number($(".ab:eq(" + i + ")").parent().next().next().text()) * Number($(".ab:eq(" + i + ")").parent().next().next().next().find("input").val());
+            }
+            $("#zongjiaqian").text(zj);
+        } else {
+            $("input[name='a']").prop("checked", false);
+            $("#zongjiaqian").text(0);
+        }
+    });
+
+    function qx(obj) {
+        var price = $(obj).parent().next().next().text();//价格
+        var stock = $(obj).parent().next().next().next().find("input").val();//购买数量
+        var flag = true;
+        var zj = 0;
+        for (var i = 0; i < $(".ab").size(); i++) {
+            if (!$(".ab:eq(" + i + ")").is(":checked")) {
+                flag = false;
+                $("input[name='b']").prop("checked", false);
+                continue;
+            } else {
+                zj += Number($(".ab:eq(" + i + ")").parent().next().next().text()) * Number($(".ab:eq(" + i + ")").parent().next().next().next().find("input").val());
+            }
+        }
+        if (flag) {
+            $("input[name='b']").prop("checked", true);
+        }
+        $("#zongjiaqian").text(zj);
+    }
+
+    $("#jiesuan").click(function () {
+        var json = "";
+        var fix = "[";
+        var sub = "]";
+        var list = [];
+        for (var i = 0; i < $(".ab").size(); i++) {
+            if ($(".ab:eq(" + i + ")").is(":checked")) {//只结算选中的商品
+                var mp_name = $(".ab:eq(" + i + ")").parent().next().find("strong").text();//商品名称
+                var mp_image = $(".ab:eq(" + i + ")").next().attr("src");//商品图片
+                var ms_xinghao = $(".ab:eq(" + i + ")").parent().next().next().next().next().text();//商品型号
+                var ms_price = $(".ab:eq(" + i + ")").parent().next().next().text();//商品价格
+                var ms_number = $(".ab:eq(" + i + ")").parent().next().next().next().find("input").val();//购买数量
+                var ms_dj = $(".ab:eq(" + i + ")").parent().next().next().next().next().next().text();//小计
+                var ms_pid = $(".ab:eq(" + i + ")").parent().next().next().next().next().next().find("input").val();//商品id
+                var ms_id = $(".ab:eq(" + i + ")").parent().next().next().next().next().next().next().find("input").val();//购物车id
+                var product = {}
+                product.mp_name = mp_name;
+                product.image = mp_image;
+                product.xinghao = ms_xinghao;
+                product.price = ms_price;
+                product.number = ms_number;
+                product.dj = ms_dj;
+                product.pid = ms_pid;
+                product.id = ms_id;
+                list.push(product);
+            } else {
+                layer.msg("请至少选择一个商品下单");
+                return;
+            }
+        }
+        $.ajax({
+            url: '/cart/JieSuan',
+            type: 'post',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(list),
+            success: function (data) {
+                window.location.href = '/cart/tiaoDingDan';//跳转到确认订单方法
+            }
+        });
+    });
+</script>
+</html>

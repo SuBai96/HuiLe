@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>小米帐号 -个人信息</title>
+    <link type="text/css" rel="stylesheet" href="http://182.92.194.216:2202/GJStatic/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="http://182.92.194.216:2202/GJStatic/css/layout.css">
+    <link rel="icon" type="image/x-icon" href="http://182.92.194.216:2202/GJStatic/img/favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="http://182.92.194.216:2202/GJStatic/layui/css/layui.css">
+    <script src="http://182.92.194.216:2202/GJStatic/js/jquery-1.8.3.min.js"></script>
+    <script src="http://182.92.194.216:2202/GJStatic/layui/layui.all.js"></script>
+</head>
+<body>
+<div class="wrapper blockimportant">
+    <div class="wrap">
+        <div class="layout bugfix_ie6 dis_none">
+            <div class="n-logo-area clearfix">
+                <a href="/User/getUser/PersonalCenter" class="fl-l">
+                    <img src="http://182.92.194.216:2202/GJStatic/img/n-logo.png">
+                </a>
+                <a id="logoutLink" class="fl-r logout" onclick="loginOut()" style="cursor: pointer;">
+                    退出
+                </a>
+            </div>
+
+            <!--头像 名字-->
+            <div class="n-account-area-box">
+                <div class="n-account-area clearfix">
+                    <div class="na-info">
+                        <p class="na-name" th:text="${user.mu_user_name}">苏白</p>
+
+                    </div>
+                    <div class="na-img-area fl-l">
+                        <div class="na-img-bg-area">
+                            <img th:src="${user.mu_headphoto}"
+                                 src="http://pw87qru7y.bkt.clouddn.com/Fq-XQLxlN4pvaG9hsNacVG_B_UH0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layout">
+            <div class="n-main-nav clearfix">
+                <ul class="c_b">
+                    <li>
+                        <a href="http://127.0.0.1:81/User/selectByUser" title="帐号安全" data-action="security">帐号安全</a>
+                    </li>
+                    <li class="current">
+                        <a href="http://127.0.0.1:81/User/PersonalDetails" title="个人信息" data-action="profile">个人信息</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="n-frame">
+                <div class="uinfo c_b">
+                    <div>
+                        <div class="main_l">
+                            <div class="naInfoImgBox t_c">
+                                <form action="/User/updateUserPhoto" method="post" enctype="multipart/form-data"
+                                      id="fileUpLoad">
+                                    <div class="na-img-area marauto">
+                                        <div class="na-img-bg-area">
+                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/user-avatar/32c7b80a-7b80-4c5a-806d-6807c2caacbe.jpg"
+                                                 th:src="${user.mu_headphoto}">
+                                        </div>
+                                        <em class="na-edit"></em>
+                                    </div>
+                                    <div class="naImgLink">
+                                        <input id="file1" type="file" name="files" hidden="">
+                                        <a class="color4a9" href="javascript:void(0)" title="修改头像"
+                                           onclick="updatePhoto()">修改头像</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="main_r" style="margin-top: 70px">
+                            <div class="framedatabox">
+                                <div class="fdata">
+                                    <a class="color4a9 fr" href="javascript:void(0)" title="编辑" id="editInfo"
+                                       onclick="Edit()"><i
+                                            class="iconpencil"></i>编辑</a>
+                                    <h3>基础资料</h3>
+                                </div>
+                                <div class="fdata lblnickname">
+                                    <p><span>姓名：</span><span class="value" th:text="${user.mu_user_name}">苏白</span></p>
+                                </div>
+                                <div class="fdata lblgender">
+                                    <p><span>性别：</span><span class="value"></span></p>
+                                </div>
+                                <div class="btn_editinfo"><a id="editInfoWap" class="btnadpt bg_normal"
+                                                             href="">编辑基础资料</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="n-footer">
+    <div class="nf-link-area clearfix">
+        <ul class="lang-select-list">
+            <li><a class="lang-select-li current" href="javascript:void(0)" data-lang="zh_CN">简体</a>|</li>
+            <li><a class="lang-select-li" href="javascript:void(0)" data-lang="zh_TW">繁体</a>|</li>
+            <li><a class="lang-select-li" href="javascript:void(0)" data-lang="en">English</a></li>
+            |
+            <li><a class="a_critical" href=""
+                   target="_blank"><em></em>常见问题</a></li>
+        </ul>
+    </div>
+    <p class="nf-intro"><span>小米公司版权所有-京ICP备10046444-<a class="beianlink beian-record-link" target="_blank"
+                                                        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134"><span><img
+            src="http://182.92.194.216:2202/GJStatic/img/ghs.png"></span>京公网安备11010802020134号</a>-京ICP证110507号</span>
+    </p>
+</div>
+</body>
+<script type="text/javascript">
+    var flag = true;
+    var sex = "";
+    $(function () {
+        $.ajax({
+            url: '/getUser',
+            type: 'post',
+            success: function (data) {
+                if (data == null) {
+                    window.location.href = "http://127.0.0.1:81/login.html";
+                }
+            },
+            error: function () {
+                layer.msg('请求出错,请联系管理员');
+            }
+        });
+    })
+
+    function loginOut() {
+        $.ajax({
+            url: '/loginOut/User',
+            type: 'post',
+            success: function (data) {
+                if (data.flag) {
+                    window.location.href = 'http://127.0.0.1:81/login.html';
+                }
+            }
+        });
+    }
+
+    function Edit() {
+        var name = $(".value:eq(0)").text();
+        var str = "";
+        alert(sex);
+        if (sex == "男") {
+            str = "<input type='radio' name='sex' value='男' title='男' checked>男<input type='radio' name='sex' value='女' title='女' style='margin-left: 15px' >女";
+        } else if (sex == "女") {
+            str = "<input type='radio' name='sex' value='男' title='男' >男<input type='radio' name='sex' value='女' title='女' style='margin-left: 15px' checked>女";
+        } else {
+            str = "<input type='radio' name='sex' value='男' title='男' >男<input type='radio' name='sex' value='女' title='女' style='margin-left: 15px' >女";
+
+        }
+        layer.open({
+            type: 1,
+            area: ['440px', '330px'],
+            title: '编辑基础资料',
+            shadeClose: false, //点击遮罩关闭
+            anim: 5,
+            move: false,
+            scrollbar: false,
+            closeBtn: 1,
+            content: "<div style='margin-top: 60px;margin-left: 75px'><span>姓名：<input type='text' name='mu_user_name' onblur='checkUsername(this)' style='width: 280px;height: 40px;margin-top:-28px;margin-left: 45px' lay-verify='title' value='" + name + "'  class='layui-input'/></span></div>" +
+                "<div style='margin-top: 25px;margin-left: 75px'>性别：" + str + "</div>" +
+                "<div style='margin-top: 40px;margin-left: 95px'><input type='button'value='保存' onclick='Save(this)' style='width: 120px;height: 40px;background-color: #FF6700;font-size: 14px;color: white;font-weight: bolder;cursor: pointer;'/><input type='button'value='取消' onclick='Close()' style='width: 120px;height: 40px;border: 1px solid #E8E8E8;font-weight: bolder;margin-left: 15px;cursor: pointer;'/></div>",
+        });
+    }
+
+
+    function Close() {
+        layer.closeAll();
+    }
+
+    function Save(obj) {
+        sex = $(obj).parent().prev().find("input[name='sex']:checked").val();
+        if (checkUsername($(obj).parent().prev().prev().find("input")) && flag == true) {
+            $.ajax({
+                url: '/User/updateUserName',
+                type: 'post',
+                data: {'mu_user_name': $(obj).parent().prev().prev().find("input").val()},
+                success: function (data) {
+                    if (data.flag) {
+                        $(".value:eq(1)").text(sex);
+                        $(".value:eq(0)").text($(obj).parent().prev().prev().find("input").val());
+                        $(".na-name").text($(obj).parent().prev().prev().find("input").val())
+                        layer.closeAll();
+                    } else {
+                        layer.msg("编辑资料失败");
+                    }
+                }
+            });
+        }
+
+    }
+
+    function updatePhoto() {
+        $("#file1").trigger("click");
+    }
+
+    $("#file1").change(function () {
+        $("#fileUpLoad").submit();
+    });
+
+    //验证用户名
+    function checkUsername(obj) {
+        var reg = /^[-_a-zA-Z0-9]{4,16}$/;
+        if ($(obj).val() == "") {
+            //username.focus();
+            layer.msg('用户名不能为空');
+            return false;
+        } else if (!reg.test($(obj).val())) {
+            username.focus();
+            layer.msg("用户名（4到16位，字母数字下划线，减号）");
+            return false;
+        } else {
+            $.ajax({
+                url: '/User/checkusername/' + $(obj).val(),
+                type: 'post',
+                async: false,
+                success: function (data) {
+                    if (data.flag == false) {
+                        layer.msg('用户名已存在,请换一个试试');
+                        username.focus()
+                        flag = false;
+                    } else {
+                        flag = true;
+                    }
+                },
+                errot: function () {
+                    layer.msg('请求出错,请联系管理员');
+                }
+            });
+        }
+        return true;
+    }
+</script>
+</html>

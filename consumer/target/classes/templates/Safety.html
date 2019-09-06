@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>小米帐号 -帐号安全</title>
+    <link type="text/css" rel="stylesheet" href="http://182.92.194.216:2202/GJStatic/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="http://182.92.194.216:2202/GJStatic/css/layout.css">
+    <link rel="icon" type="image/x-icon" href="http://182.92.194.216:2202/GJStatic/img/favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="http://182.92.194.216:2202/GJStatic/layui/css/layui.css">
+    <script src="http://182.92.194.216:2202/GJStatic/js/jquery-1.8.3.min.js"></script>
+    <script src="http://182.92.194.216:2202/GJStatic/layui/layui.all.js"></script>
+</head>
+<body>
+<div class="wrapper blockimportant">
+    <div class="wrap">
+        <div class="layout bugfix_ie6 dis_none">
+            <div class="n-logo-area clearfix">
+                <a href="/User/getUser/PersonalCenter" class="fl-l">
+                    <img src="http://182.92.194.216:2202/GJStatic/img/n-logo.png">
+                </a>
+                <a id="logoutLink" class="fl-r logout" onclick="loginOut()" style="cursor: pointer;">
+                    退出
+                </a>
+            </div>
+
+            <!--头像 名字-->
+            <div class="n-account-area-box">
+                <div class="n-account-area clearfix">
+                    <div class="na-info">
+                        <p class="na-name" th:text="${user.mu_user_name}">苏白</p>
+                    </div>
+                    <div class="na-img-area fl-l">
+                        <div class="na-img-bg-area">
+                            <img th:src="${user.mu_headphoto}"
+                                 src="http://pw5yjo7ws.bkt.clouddn.com/Fq-XQLxlN4pvaG9hsNacVG_B_UH0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layout">
+            <div class="n-main-nav clearfix">
+                <ul class="c_b">
+                    <li class="current">
+                        <a href="http://127.0.0.1:81/User/selectByUser" title="帐号安全" data-action="security">帐号安全</a>
+                    </li>
+                    <li>
+                        <a href="http://127.0.0.1:81/User/PersonalDetails" title="个人信息" data-action="profile">个人信息</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="n-frame">
+                <div class="title-item title_security_wap security_level">
+                    <h4 class="title-big dis-inb">安全等级</h4>
+                    <em class="space6"></em>
+                    <p class="font-normal dis-inb wap_colb2">
+                        <em class="light-num" style="padding:0">
+                            <span class="score_2" th:if="${user.mu_email=='暂未填写邮箱'}">66</span>
+                            <span class="score_4" th:if="${user.mu_email!='暂未填写邮箱'}" style="color: #33CC00">100</span>
+                        </em>分
+                    </p>
+                    <div class="slider-area dis-inb vert-m" style="width:360px;">
+                        <div class="slider-bar-bg"></div>
+                        <div class="slider-bar-line score_bg_2" style="width:66%;"
+                             th:if="${user.mu_email=='暂未填写邮箱'}"></div>
+                        <div class="slider-bar-line score_bg_2" style="width:100%;background-color:#33CC00 "
+                             th:if="${user.mu_email!='暂未填写邮箱'}"></div>
+                        <em class="drag-ico" style="left:66%" th:if="${user.mu_email=='暂未填写邮箱'}"></em>
+                        <em class="drag-ico" style="left:100%" th:if="${user.mu_email!='暂未填写邮箱'}"></em>
+                    </div>
+                    <p class="font-normal dis-inb security_level_txt">
+
+                        <span class="score_outer_2" th:if="${user.mu_email=='暂未填写邮箱'}">存在<em class="light-num">1</em>项风险</span>
+                        <span class="score_4" th:if="${user.mu_email!='暂未填写邮箱'}"
+                              style="color: #33CC00">太棒了，风险已降至最低</span>
+                    </p>
+                </div>
+                <ul class="device-detail-area">
+                    <li id="changePassword" class="click-row">
+                        <div class="font-img-item clearfix">
+                            <em class="fi-ico fi-ico-lock"></em>
+                            <p class="title-normal dis-inb">帐号密码</p>
+                            <p class="font-default">用于保护帐号信息和登录安全</p>
+                        </div>
+                        <div class="ada-btn-area" id="btnUpdatePassword"><a href="javascript:void(0)"
+                                                                            class="n-btn">修改</a></div>
+                    </li>
+
+
+                    <li id="changeEmail" class="click-row">
+                        <div class="font-img-item clearfix">
+                            <em class="fi-ico fi-ico-email"></em>
+                            <div class="item_column">
+                                <p class="title-normal dis-inb">安全邮箱</p>
+                                <span class="title-normal wap-desc user_address"
+                                      th:text="${user.mu_email=='暂未填写邮箱'?'':#strings.substring(user.mu_email,0,2)+'********'+#strings.substring(user.mu_email,#strings.indexOf(user.mu_email,'@'),#strings.length(user.mu_email))}">
+                                 </span>
+                            </div>
+                            <span class="title-normal wap-desc" th:if="${user.mu_email=='暂未填写邮箱'}">
+                                 <span class="warning-tip">&nbsp;</span>
+                                <span class="color-active">未设置</span>
+                             </span>
+                            <p class="font-default color-active" th:if="${user.mu_email=='暂未填写邮箱'}">
+                                安全邮箱可以用于登录小米帐号，建议立即设置</p>
+                            <p class="font-default" th:if="${user.mu_email!='暂未填写邮箱'}">安全邮箱可以用于登录小米帐号，重置密码或其他安全验证</p>
+                        </div>
+
+                        <div class="ada-btn-area" id="btnUpdateEmail">
+                            <!--正常状态-->
+                            <a href="javascript:void(0)" class="n-btn" th:if="${user.mu_email!='暂未填写邮箱'}" id="UpdateEmial">修改</a>
+                            <a href="javascript:void(0)" class="n-btn" th:if="${user.mu_email=='暂未填写邮箱'}" id="setEmial">设置</a>
+                        </div>
+                    </li>
+
+
+                    <li id="changeMobile" class="click-row">
+                        <div class="font-img-item clearfix">
+                            <em class="fi-ico fi-ico-phone"></em>
+                            <div class="item_column">
+                                <p class="title-normal dis-inb">安全手机</p>
+                                <input hidden th:value="${user.mu_mobile}" id="mobile"/>
+                                <span class="title-normal wap-desc user_address">
+                      <span class="phone-bind-adress" id="mobile2" th:text="${#strings.substring(user.mu_mobile,0,3)+'********'+#strings.substring(user.mu_mobile,9,11)}">176******24</span>
+                                </span>
+                            </div>
+                            <p class="font-default">安全手机可以用于登录小米帐号，重置密码或其他安全验证</p>
+                        </div>
+                        <div class="ada-btn-area" id="btnUpdatePhone">
+                            <a class="n-btn btnChangeMobile" href="javascript:void(0)" id="updateMobile">修改</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="n-footer">
+    <div class="nf-link-area clearfix">
+        <ul class="lang-select-list">
+            <li><a class="lang-select-li current" href="javascript:void(0)" data-lang="zh_CN">简体</a>|</li>
+            <li><a class="lang-select-li" href="javascript:void(0)" data-lang="zh_TW">繁体</a>|</li>
+            <li><a class="lang-select-li" href="javascript:void(0)" data-lang="en">English</a></li>
+            |
+            <li><a class="a_critical" href=""
+                   target="_blank"><em></em>常见问题</a></li>
+        </ul>
+    </div>
+    <p class="nf-intro"><span>小米公司版权所有-京ICP备10046444-<a class="beianlink beian-record-link" target="_blank"
+                                                        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010802020134"><span><img
+            src="http://182.92.194.216:2202/GJStatic/img/ghs.png"></span>京公网安备11010802020134号</a>-京ICP证110507号</span>
+    </p>
+</div>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: '/getUser',
+            type: 'post',
+            success: function (data) {
+                if (data == null) {
+                    window.location.href = "http://127.0.0.1:81/login.html";
+                }
+            },
+            error: function () {
+                layer.msg('请求出错,请联系管理员');
+            }
+        });
+    })
+
+    function loginOut() {
+        $.ajax({
+            url: '/loginOut/User',
+            type: 'post',
+            success: function (data) {
+                if (data.flag) {
+                    window.location.href = 'http://127.0.0.1:81/login.html';
+                }
+            }
+        });
+    }
+
+    $("#btnUpdatePassword").click(function () {
+        layer.open({
+            type: 1,
+            area: ['441px', '510px'],
+            title: '修改密码',
+            shadeClose: false, //点击遮罩关闭
+            anim: 5,
+            move: false,
+            scrollbar: false,
+            closeBtn: 1,
+            content: '<div class="layui-form-item" style="margin-top: 20px">\n' +
+                '    <label class="layui-form-label" style="margin-top: 0px;margin-left: -20px;font-weight: bolder">原密码</label>\n' +
+                '    <div class="layui-input-inline" style="margin-top: 40px;margin-left: -60px">\n' +
+                '        <input type="password" name="password"required lay-verify="required"placeholder="请输入原密码" autocomplete="off"  class="layui-input" style="width: 300px" onblur="checkpwd()" id="pwd">\n' +
+                '    </div>\n' +
+                '</div>\n' +
+                '<div class="layui-form-item">\n' +
+                '    <label class="layui-form-label" style="margin-top: -5px;margin-left: -20px;font-weight: bolder">新密码</label>\n' +
+                '    <div class="layui-input-inline" style="margin-top: 30px;margin-left: -60px">\n' +
+                '        <input type="password" required lay-verify="required" placeholder="请输入新密码" autocomplete="off"\n' +
+                '               class="layui-input" style="width: 300px" onblur="checkNewPwd()" id="newPwd">\n' +
+                '    </div>\n' +
+                '</div>\n' +
+                '<div class="layui-form-item">\n' +
+                '    <label class="layui-form-label" style="margin-top: -5px;margin-left: -5px;font-weight: bolder">确认密码</label>\n' +
+                '    <div class="layui-input-inline" style="margin-top: 30px;margin-left: -75px">\n' +
+                '        <input type="password" id="confirmpwd2" required lay-verify="required" placeholder="重复新密码" autocomplete="off"\n' +
+                '               class="layui-input" style="width: 300px" onblur="checkconfirmpwd()">' +
+                '<span style="margin-left: 0px;font-size: 12px">密码长度6-20个字母.数字.下划线</span>\n' +
+                '    </div>\n' +
+                '\n' +
+                '</div>\n' +
+                '<div class="layui-form-item" style="width: 420px">\n' +
+                '    <label class="layui-form-label" style="margin-top: -5px;margin-left: -20px;font-weight: bolder">验证码</label>\n' +
+                '    <div class="layui-input-inline" style="margin-top: 30px;margin-left: -56px">\n' +
+                '        <input type="text" required lay-verify="required" placeholder="图片验证码" autocomplete="off" class="layui-input"\n' +
+                '               style="width: 150px" onblur="checkcode(this)" onclick="getcode(this)">\n' +
+                '        <img src="http://127.0.0.1:81/Image" style="margin-left: 160px;margin-top: -60px"/>\n' +
+                '        <a href="javascript:void(0)" style="margin-left: 80px" onclick="SwitchVerificationCode(this)">看不清楚换一张?</a>\n' +
+                '    </div>\n' +
+                '</div>\n' +
+                '<div class="layui-form-item">\n' +
+                '    <div class="layui-input-block">\n' +
+                '        <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="Save(this)">确定</button>\n' +
+                '        <button type="button" class="layui-btn layui-btn-primary" onclick="Close()">取消</button>\n' +
+                '    </div>\n' +
+                '</div>',
+        })
+    });
+
+
+    var code = "";
+
+    function SwitchVerificationCode(obj) {
+        $.ajax({
+            url: '/Image',
+            type: 'post',
+            async: false,
+            success: function (result) {
+                $(obj).prev().prop("src", '/Image');
+            }
+        });
+    }
+
+    function checkpwd() {
+        if ($("#pwd").val() == "") {
+            layer.msg("请输入原密码");
+            return false
+        } else {
+            $.ajax({
+                url: '/User/checkPwd/' + $("#pwd").val(),
+                type: 'post',
+                success: function (data) {
+                    if (data.flag == false) {
+                        layer.msg(data.mess);
+                        return false;
+                    } else {
+                        layer.msg(data.mess);
+                    }
+                }
+            });
+        }
+        return true;
+    }
+
+    function getcode() {
+        $.ajax({
+            url: '/User/getverificationCode',
+            type: 'post',
+            async: false,
+            success: function (data) {
+                code = data;
+            }
+        });
+    }
+
+    function checkcode(obj) {
+        if ($(obj).val() == "") {
+            layer.msg("请输入验证码");
+            return false;
+        } else if ($(obj).val() != code) {
+            layer.msg("验证码输入错误");
+            return false;
+        }
+        return true;
+    }
+
+    function checkNewPwd() {
+        var reg = /^(\w){6,20}$/;
+        var newpwd = $("#newPwd");
+        if (newpwd.val() == "") {
+            layer.msg("请输入新密码");
+            return false;
+        } else if (!reg.test(newpwd.val())) {
+            layer.msg("密码格式不正确");
+            return false;
+        }
+        return true;
+    }
+
+    function checkconfirmpwd() {
+        var newpwd = $("#newPwd");
+        var confirmpwd2 = $("#confirmpwd2");
+        if (confirmpwd2.val() == "") {
+            layer.msg("请再次输入密码");
+            return false;
+        } else if (confirmpwd2.val() != newpwd.val()) {
+            layer.msg("密码输入不一致");
+            return false;
+        }
+        return true;
+    }
+
+    function Close() {
+        layer.closeAll();
+    }
+
+    function Save(obj) {
+        var pwd = $(obj).parent().parent().prev().prev().prev().find("div").find("input").val();//原密码
+        var newpwd = $(obj).parent().parent().prev().prev().find("div:eq(0)").find("input").val();//新密码
+        var confirmpwd = $(obj).parent().parent().prev().prev().find("div:eq(1)").find("input").val();//确认面膜
+        var code = $(obj).parent().parent().prev().find("div").find("input").val();//验证码
+        if (checkpwd() && checkNewPwd() && checkconfirmpwd() && checkcode($(obj).parent().parent().prev().find("div").find("input"))) {
+            var ii = layer.load();
+            //此处用setTimeout演示ajax的回调
+            setTimeout(function () {
+                layer.close(ii);
+                $.ajax({
+                    url: '/User/userUpdatePwd',
+                    data: {'password': newpwd},
+                    type: 'post',
+                    success: function (data) {
+                        if (data.flag == true) {
+                            layer.closeAll();
+                            layer.confirm('密码修改成功,请您重新登录~', {
+                                btn: ['知道了'] //可以无限个按钮
+                                , move: false, scrollbar: false, title: '温馨提示',
+                            }, function (index, layero) {
+                                window.location.href = 'http://127.0.0.1:81/login.html';
+                            });
+                        } else {
+                            layer.msg(data.mess);
+                        }
+                    }
+                });
+            }, 800);
+        }
+    }
+
+    var mobile=$("#mobile").val();//手机号
+    var encryptionmobile=$("#mobile2").text();//加密手机号
+
+    $("#setEmial").click(function () {
+        layer.open({
+            type: 2,
+            area: ['440px', '330px'],
+            title: '买来乐账号安全验证',
+            shadeClose: false, //点击遮罩关闭
+            anim: 5,
+            move: false,
+            scrollbar: false,
+            closeBtn: 1,
+            content:"http://127.0.0.1:81/BindEmail.html",
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                body.find('.encryptionmobile').text(encryptionmobile);
+                body.find('#mobile').val(mobile);
+            }
+        });
+    });
+    $("#UpdateEmial").click(function () {
+        layer.open({
+            type: 2,
+            area: ['440px', '330px'],
+            title: '买来乐账号安全验证',
+            shadeClose: false, //点击遮罩关闭
+            anim: 5,
+            move: false,
+            scrollbar: false,
+            closeBtn: 1,
+            content:"http://127.0.0.1:81/BindEmail.html",
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                body.find('.encryptionmobile').text(encryptionmobile);
+                body.find('#mobile').val(mobile);
+            }
+        });
+    });
+    $("#updateMobile").click(function () {
+        layer.open({
+            type: 2,
+            area: ['440px', '330px'],
+            title: '买来乐账号安全验证',
+            shadeClose: false, //点击遮罩关闭
+            anim: 5,
+            move: false,
+            scrollbar: false,
+            closeBtn: 1,
+            content:"http://127.0.0.1:81/BindMobile.html",
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                body.find('.encryptionmobile').text(encryptionmobile);
+                body.find('#mobile').val(mobile);
+            }
+        });
+    });
+</script>
+</html>

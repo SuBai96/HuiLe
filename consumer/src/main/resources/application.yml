@@ -1,0 +1,103 @@
+server:
+  port: 81
+
+mybatis:
+  type-aliases-package: com.mll.pojo
+  configuration:
+    auto-mapping-behavior: full
+    use-generated-keys: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  page-size-zero: true
+
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://182.92.194.216:3306/MLL
+    username: root
+    password: root
+    dbcp2:
+      min-idle: 5
+      initial-size: 5
+      max-total: 5
+      max-wait-millis: 200
+  data:
+    solr:
+      host: http://182.92.194.216:8983/solr
+  thymeleaf:
+    encoding: UTF-8
+    #开发时关闭缓存,不然没法看到实时页面
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  mvc:
+      static-path-pattern: /**
+  resources:
+      static-locations: classpath:/templates/,classpath:/META-NF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  application:
+    name: mll-consumer
+
+eureka:
+  client:
+    register-with-eureka: true
+    service-url: 
+      defaultZone: http://eureka6001.com:6001/eureka/
+  instance:
+    instance-id: mll-consumer-81
+    prefer-ip-address: true     #访问路径可以显示IP地址
+#  redis:
+#    database: 0
+#    host: 182.92.194.216
+#    password: 123456
+#    port: 6379
+#    timeout: 60s
+#    jedis:
+#      pool:
+#        max-idle: 50        # 最大空闲连接数
+#        min-idle: 10        # 最小空闲连接数
+#        max-wait:  -1s        # 等待可用连接的最大时间，负数为不限制
+#        max-active: -1        # 最大活跃连接数，负数为不限制
+info:
+  app.name: mll-microservice
+  company.name: www.mll.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+
+#fegin的超时时间
+feign:
+  httpclient:
+    connection-timeout: 30000
+    enabled: true
+  hystrix:
+    enabled: false
+
+#hystrix的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+
+
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 30000
+  eureka:
+    enabled: true
+      默认支持文件上传:本示例上传七牛云
+servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10*1024*1024       #单文件大小
+      max-request-size: 100*1024*1024    #总大小
+

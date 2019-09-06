@@ -1,0 +1,70 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>用户登录</title>
+    <link rel="stylesheet" type="text/css" href="../static/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../static/demo.css">
+    <!--必要样式-->
+    <link rel="stylesheet" type="text/css" href="../static/component.css">
+    <!--[if IE]>
+    <script src="../static/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="../static/jquery-3.2.1.js"></script><script type="text/javascript">
+        $(function () {
+            $("#aa").click(function () {
+                var userName = $("#userName").val();
+                var password = $("#password").val();
+                $.ajax({
+                    url : "/submit",
+                    Type : "post",
+                    data : {"userName":userName,"password" : password},
+                    dataType : "text",
+                    success : function (data) {
+                        if(data == "success"){
+                            alert("登录成功！正在跳转....")
+                            window.location.href="/index";
+                        }if(data=="error"){
+                            alert("登录失败，请重新登录！")
+                        }
+                    },
+                    error : function x() {
+                        alert("报错了！");
+                    }
+                });
+            });
+        });
+    </script></head>
+
+
+<body>
+<div class="container demo-1">
+    <div class="content">
+        <div id="large-header" class="large-header" style="height: 754px;">
+            <canvas id="demo-canvas" width="1536" height="754"></canvas>
+            <div class="logo_box">
+                <h3>买来乐  欢迎你</h3>
+                <form action="http://www.toutou.online/login#" name="f" method="post">
+                    <div class="input_outer">
+                        <span class="u_user"></span>
+                        <input name="logname" class="text" style="color: #FFFFFF !important" type="text" id="userName" placeholder="请输入账户">
+                    </div>
+                    <div class="input_outer">
+                        <span class="us_uer"></span>
+                        <input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;" value="" id="password" type="password" placeholder="请输入密码">
+                    </div>
+                    <div class="mb2" style="cursor:pointer;"><a class="act-but submit" id="aa" style="color: #FFFFFF">登录</a></div>
+                    <a href="findpassword.html" style="color: #FFFFFF">忘记密码</a>
+
+                    <!--<a href="http://www.toutou.online/register" style="float: right;color: #FFFFFF">注册</a>-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- /container -->
+<script src="../static/TweenLite.min.js"></script>
+<script src="../static/EasePack.min.js"></script>
+<script src="../static/rAF.js"></script>
+<script src="../static/demo-1.js"></script>
+
+</body></html>
